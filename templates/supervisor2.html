@@ -1,0 +1,28 @@
+
+<md-content layout-padding>
+ <div flex="grow" layout="row" layout-align="center center">
+   <div flex-gt-sm="50" flex>
+    <md-toolbar layout="row" class="md-hue-4">
+      <div class="md-toolbar-tools">
+        <span>Seccions</span>
+      </div>
+    </md-toolbar>
+    <md-content class="md-whiteframe-2dp">
+      <md-list flex>
+        
+        <md-list-item class="md-3-line" ng-repeat="dept in depts" ng-click="go(dept.WCGroup)">
+          <!--img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" /-->
+          <div class="md-list-item-text" layout="column">
+            <h3>{{ dept.WCGroup }}</h3>
+          </div>
+          <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="Go">
+            <md-icon md-svg-src="img/icons/ic_reply_white_18px.svg" ng-click="go(dept.WCGroup)" style="color: greenyellow;"></md-icon>
+          </md-button>
+          <md-divider ng-if="!$last"></md-divider>
+        </md-list-item>
+        
+      </md-list>
+    </md-content>
+  </div>
+ </div>
+</md-content>

@@ -1,0 +1,38 @@
+<md-content layout-padding >
+    <md-card flex-offset-gt-sm="25" flex-gt-md="50">
+        <md-card-header>
+          <md-card-avatar>
+            <img class="md-user-avatar" src="img/cerutti11.jpg"/>
+          </md-card-avatar>
+          <md-card-header-text>
+            <span class="md-headline"><strong>Màquina: </strong>{{machineName}}</span>
+          </md-card-header-text>
+        </md-card-header>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline"><strong>OF:</strong>{{ofActual}}</span>
+            <span class="md-subhead"><strong>Descripció:</strong>{{ofDescription}}</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+           <div layout-xs="column" layout="row"  layout-align="space-around">
+            <!--md-progress-circular md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-circular-->
+            <div layout= "column" layout-align="space-around">
+              <h2 class="md-display-1">{{ofCompletedPercent  | number:2}}%</h2>
+              <div>
+                <md-progress-linear md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-linear>
+                <md-progress-linear md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-linear>
+              </div>
+            </div>
+            <div layout= "column" layout-align="space-around">
+              <br/>
+                <span class="md-headline"><strong>Ordre:</strong>{{ofQtyPlanned}}</span>
+                <span class="md-headline"><strong>Complert:</strong>{{ofCompleted}}</span>
+            </div>
+            <div layout= "column" layout-align="space-around center">
+              <h2 class="md-display-1">{{ofState}}</h2>
+            </div>
+          </div>
+        </md-card-content>
+      </md-card>
+</md-content>

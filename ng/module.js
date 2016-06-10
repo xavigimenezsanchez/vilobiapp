@@ -1,0 +1,1 @@
+angular.module('vilobiApp',['ui.router','ngMaterial','sasrio.angular-material-sidenav']);
