@@ -1,11 +1,15 @@
 angular.module('vilobiApp')
-    .controller('machineRegularController', function($scope, $http, $stateParams, $location, $state, $interval, $timeout, $mdSidenav) {
+    .controller('machineRegularController', function($scope, $http, $stateParams, $location, $state, $interval, $timeout, $mdSidenav, driverSrv) {
         var machine = $stateParams.id;
         
         $scope.goSupervisor = function() {
             $state.go('common.supervisor');
         }
         
+        $scope.goBack = function() {
+            console.log(driverSrv.get());
+            $state.go('common.supervisorMachine',{'id':driverSrv.get()});
+        }
         $http.get('../../api/machine/name/' + machine)
                 .success(function(name) {
                     if (name.length >0 ) {

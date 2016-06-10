@@ -6,6 +6,9 @@
       <div class="md-toolbar-tools">
         <span>{{machine}}</span>
       </div>
+      <md-button  class="md-primary" ng-click="goBack()"  aria-label="Go">
+            <md-icon md-svg-src="img/icons/ic_backspace_white_18px.svg"></md-icon>
+          </md-button>
     </md-toolbar>
     <md-content class="md-whiteframe-2dp">
       <md-list flex>
@@ -16,10 +19,10 @@
             <h3>{{ machine.WrkCtrId }}</h3>
           </div>
           <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="Go">
-            <md-icon md-svg-src="img/icons/ic_reply_white_18px.svg" ng-click="go(machine.WrkCtrId)" style="color: greenyellow;"></md-icon>
+            <md-icon md-svg-src="img/icons/ic_computer_white_18px.svg" ng-click="go(machine.WrkCtrId)" style="color: greenyellow;"></md-icon>
           </md-button>
           <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="Go">
-            <md-icon md-svg-src="img/icons/ic_reply_white_18px.svg" ng-click="goBigScreen(machine.WrkCtrId)" style="color: greenyellow;"></md-icon>
+            <md-icon md-svg-src="img/icons/ic_visibility_white_18px.svg" ng-click="goBigScreen(machine.WrkCtrId)" style="color: greenyellow;"></md-icon>
           </md-button>
           <md-divider ng-if="!$last"></md-divider>
         </md-list-item>
