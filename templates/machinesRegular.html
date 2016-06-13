@@ -1,0 +1,51 @@
+<md-content layout-padding>
+    <md-grid-list  
+            md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4"
+            md-row-height-gt-md="1:1" md-row-height="4:3" 
+             >
+            <md-grid-tile ng-repeat="machine in machines track by $index">
+                <md-card flex="95">
+                    <md-card-header>
+                    <md-card-avatar>
+                        <img class="md-user-avatar" src="img/cerutti11.jpg"/>
+                    </md-card-avatar>
+                    <md-card-header-text>
+                        <span class="md-headline"><!--strong>Màquina: </strong-->{{machine.name}}</span>
+                    </md-card-header-text>
+                    <!--md-button  class="md-primary" ng-click="goBack()"  aria-label="Go">
+                        <md-icon md-svg-src="img/icons/ic_backspace_black_18px.svg"></md-icon>
+                    </md-button-->
+                    </md-card-header>
+                    <md-card-title>
+                    <md-card-title-text>
+                        <!--span class="md-headline"><strong>OF:</strong>{{machine.ofActual}}</span-->
+                        <div><strong>Descripció:</strong></div>
+                        <span class="md-subhead">{{machine.ofDescription}}</span>
+                    </md-card-title-text>
+                    </md-card-title>
+                    <md-card-content>
+                    <div layout-xs="column" layout="row"  layout-align="space-around">
+                        <!--md-progress-circular md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-circular-->
+                        <div layout= "column" layout-align="space-around" ng-if="machine.ofCompletedPercent">
+                            <h3 >{{machine.ofCompletedPercent  | number:2}}%</h3>
+                            <div>
+                                <md-progress-linear md-mode="determinate" value="{{machine.ofCompletedPercent}}"></md-progress-linear>
+                                <md-progress-linear md-mode="determinate" value="{{machine.ofCompletedPercent}}"></md-progress-linear>
+                            </div>
+                        </div>
+                        <div layout= "column" layout-align="space-around">
+                        
+                            <span ><strong>Ordre:</strong></span>
+                            <span>&nbsp{{machine.ofQtyPlanned}}</span>
+                            <span ><strong>Complert:</strong></span>
+                            <span>&nbsp{{machine.ofCompleted}}</span>
+                        </div>
+                        <div layout= "column" layout-align="space-around center">
+                            <h3 >{{machine.ofState}}</h3>
+                        </div>
+                    </div>
+                    </md-card-content>
+                </md-card>
+            </md-grid-tile>
+    </md-grid-list>
+</md-content>

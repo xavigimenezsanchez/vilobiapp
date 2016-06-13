@@ -31,6 +31,12 @@ angular.module('vilobiApp')
                 controller      :   'machineRegularController',
                 breadCrumbs : 'machine'
             })
+            .state('common.machinesRegular' , {
+                url             :   '/machinesRegular/:id',
+                templateUrl    :   '/templates/machinesRegular.html',
+                controller      :   'machinesRegularController',
+                breadCrumbs : 'machines'
+            })
             .state('common.supervisor' , {
                 url             :   '/supervisor',
                 templateUrl    :   '/templates/supervisor2.html',

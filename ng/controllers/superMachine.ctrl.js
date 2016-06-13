@@ -9,6 +9,7 @@ angular.module('vilobiApp')
             $state.go('common.supervisor');
         }
          $scope.goBigScreen = function(locate) {
+            driverSrv.set($stateParams.id);
             $scope.$emit('Machine');
             $state.go('common.machine',{'id':locate});
         };

@@ -10,7 +10,6 @@ angular.module('vilobiApp')
 
             
             $scope.machine = false;
-            console.log($state);
             $scope.breadCrumbs =  $state.current.breadCrumbs;
             
             $scope.onClickMenu = function () {

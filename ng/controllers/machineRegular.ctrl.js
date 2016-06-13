@@ -7,8 +7,12 @@ angular.module('vilobiApp')
         }
         
         $scope.goBack = function() {
-            console.log(driverSrv.get());
-            $state.go('common.supervisorMachine',{'id':driverSrv.get()});
+            if (driverSrv.get()) {
+                $state.go('common.supervisorMachine',{'id':driverSrv.get()});
+            } else {
+                $state.go('common.supervisor');
+            }
+            
         }
         $http.get('../../api/machine/name/' + machine)
                 .success(function(name) {

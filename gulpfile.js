@@ -23,8 +23,16 @@ gulp.task('js', function () {
         .pipe(gulp.dest("assets/js"));
 });
 
-gulp.task('watch:js', ['js'], function() {
-    gulp.watch('ng/**/*.js', ['js']);
+gulp.task('js-dev', function () {
+    gulp.src(['ng/module.js','ng/**/*.js'])
+        .pipe(sourcemaps.init())
+            .pipe(concat('vilobiApp.js'))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest("assets/js"));
+});
+
+gulp.task('watch:js', ['js-dev'], function() {
+    gulp.watch('ng/**/*.js', ['js-dev']);
 });
 
 gulp.task('dev', ['watch:js', 'dev:server']);

@@ -1,5 +1,5 @@
 angular.module('vilobiApp')
-    .controller('bitScreenController', function($scope, $http, $location, $state, $interval, $timeout, $mdSidenav) {
+    .controller('bitScreenController', function($scope, $http, driverSrv, $location, $state, $interval, $timeout, $mdSidenav) {
         var url = $location.absUrl().split('/');
         $scope.$emit('Machine');
         $scope.sfFirst =[];
@@ -7,6 +7,16 @@ angular.module('vilobiApp')
         $scope.goSupervisor = function() {
             $scope.$emit('MachineOut');
             $state.go('common.supervisor');
+        }
+
+        $scope.goBack = function() {
+            $scope.$emit('MachineOut');
+            if (driverSrv.get()) {
+                $state.go('common.supervisorMachine',{'id':driverSrv.get()});
+            } else {
+                $state.go('common.supervisor');
+            }
+            
         }
         
         $http.get('../../api/machine/'+url[url.length -1])

@@ -3,6 +3,9 @@ angular.module('vilobiApp')
         $scope.go = function(locate) {
             $state.go('common.supervisorMachine',{'id':locate});
         };
+        $scope.goGeneral = function(locate) {
+            $state.go('common.machinesRegular',{'id':locate});
+        };
         supervisorSrv.departaments()
             .success(function(depts) {
                 $scope.depts = depts;
