@@ -1,1 +1,1 @@
-angular.module('vilobiApp',['ui.router','ngMaterial','sasrio.angular-material-sidenav']);
+angular.module('vilobiApp',['ui.router','ngMaterial','sasrio.angular-material-sidenav','ng-mfb']);
