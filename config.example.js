@@ -1,7 +1,7 @@
 module.exports = {
     db      :   {
-                    user    :   'reports',
-                    passwd  :   'reports01'
+                    user    :   '',
+                    passwd  :   ''
                 },
     secret  :   'supercalifragilistico',
     PORT    :   3000
