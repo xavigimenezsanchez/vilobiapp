@@ -7,8 +7,9 @@ angular.module('vilobiApp')
         }
         
         $scope.goBack = function() {
-            if (driverSrv.get()) {
-                $state.go('common.supervisorMachine',{'id':driverSrv.get()});
+            var state = driverSrv.getState();
+            if (driverSrv.get() && driverSrv.getState()) {
+                $state.go(state,{'id':driverSrv.get()});
             } else {
                 $state.go('common.supervisor');
             }

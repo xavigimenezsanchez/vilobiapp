@@ -7,10 +7,13 @@ angular.module('vilobiApp')
         $scope.machines = [];
 
         $scope.goSupervisor = function() {
+            driverSrv.set(locate);
+            driverSrv.setState($state.current.name);
             $state.go('common.supervisor');
         }
         
         $scope.goBack = function() {
+            
             if (driverSrv.get()) {
                 $state.go('common.supervisorMachine',{'id':driverSrv.get()});
             } else {
@@ -19,6 +22,19 @@ angular.module('vilobiApp')
             
         }
 
+
+        $scope.go = function(locate) {
+                driverSrv.setState($state.current.name);
+                driverSrv.set($stateParams.id);
+                $state.go('common.machineRegular',{'id':locate});
+            };
+            
+        $scope.goBigScreen = function(locate) {
+                driverSrv.setState($state.current.name);
+                driverSrv.set($stateParams.id);
+                $scope.$emit('Machine');
+                $state.go('common.machine',{'id':locate});
+            };
         supervisorSrv.machines($stateParams.id)
             .success(function(mchs) {
 
@@ -47,6 +63,7 @@ angular.module('vilobiApp')
             machines.forEach(function(machine, index, array){
                 var aux ={};
                 aux['name'] = machine.name;
+                aux['id'] = machine.id;
                 
                 $http.get('../../api/machine/actual/'+machine.id)
                     .success(function(name) {

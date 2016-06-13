@@ -1,6 +1,6 @@
 <md-content layout-padding>
     <md-grid-list  
-            md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4"
+            md-cols="1" md-cols-sm="2" md-cols-md="2" md-cols-gt-md="4"
             md-row-height-gt-md="1:1" md-row-height="4:3" 
              >
             <md-grid-tile ng-repeat="machine in machines track by $index">
@@ -12,15 +12,19 @@
                     <md-card-header-text>
                         <span class="md-headline"><!--strong>Màquina: </strong-->{{machine.name}}</span>
                     </md-card-header-text>
-                    <!--md-button  class="md-primary" ng-click="goBack()"  aria-label="Go">
-                        <md-icon md-svg-src="img/icons/ic_backspace_black_18px.svg"></md-icon>
-                    </md-button-->
+                    <md-button  class="md-fab md-mini md-primary md-hue-2" ng-click="go(machine.id)"  aria-label="Go">
+                        <md-icon md-svg-src="img/icons/ic_computer_white_18px.svg"></md-icon>
+                    </md-button>
+                    <md-button  class="md-fab md-mini md-primary md-hue-2" ng-click="goBigScreen(machine.id)"  aria-label="Go">
+                        <md-icon md-svg-src="img/icons/ic_visibility_white_18px.svg"></md-icon>
+                    </md-button>
                     </md-card-header>
                     <md-card-title>
                     <md-card-title-text>
                         <!--span class="md-headline"><strong>OF:</strong>{{machine.ofActual}}</span-->
-                        <div><strong>Descripció:</strong></div>
-                        <span class="md-subhead">{{machine.ofDescription}}</span>
+                        <span><strong>{{machine.ofActual}}</strong></span>
+                        <!--div><strong>Descripció:</strong></div-->
+                        <span class="md-subhead">&nbsp&nbsp{{machine.ofDescription}}</span>
                     </md-card-title-text>
                     </md-card-title>
                     <md-card-content>
