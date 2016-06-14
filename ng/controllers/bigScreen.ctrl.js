@@ -49,7 +49,21 @@ angular.module('vilobiApp')
                         });
                     $http.get('../api/slit/'+name[0]['PrOdId'])
                         .success(function(qty) {
-                            $scope.ofQtyPlanned = qty[0]['OrderQty'];
+                             if (name[0]['OprNum'] == 10 && 
+                                    ($scope.machineName != 'INKMAKER'  && $scope.machineName != 'NOMAN'
+                                    && $scope.machineName != 'MAN'
+                                    )) {
+                                        /* If OF is in state 10 or machine id is diferent 
+                                           of INKMAKER we need find out quantity 
+                                           in another table: PrOdBOM
+                                        */
+                                        $http.get('../api/printer/' + name[0]['PrOdId'])
+                                            .success(function(q) {
+                                                $scope.ofQtyPlanned = q[0]['quantity']; 
+                                            })
+                                    } else {
+                                        $scope.ofQtyPlanned = qty[0]['OrderQty'];
+                                    }
                             $http.get('../api/of/completed/'+name[0]['PrOdId']+'/'+name[0]['OprNum']+'/'  +url[url.length -1])
                                 .success(function(comp) {
                                     if (comp.length>0) {

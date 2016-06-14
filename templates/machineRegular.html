@@ -5,7 +5,7 @@
             <img class="md-user-avatar" src="img/cerutti11.jpg"/>
           </md-card-avatar>
           <md-card-header-text>
-            <span class="md-headline"><strong>Màquina: </strong>{{machineName}}</span>
+            <span class="md-headline"><strong>{{machineName}} </strong></span>
           </md-card-header-text>
           <md-button  class="md-primary" ng-click="goBack()"  aria-label="Go">
             <md-icon md-svg-src="img/icons/ic_backspace_black_18px.svg"></md-icon>
@@ -29,7 +29,7 @@
             </div>
             <div layout= "column" layout-align="space-around">
               <br/>
-                <span class="md-headline"><strong>Ordre:</strong>{{ofQtyPlanned}}</span>
+                <span class="md-headline"><strong>Ordre:</strong>{{ofQtyPlanned | number:2}}</span>
                 <span class="md-headline"><strong>Complert:</strong>{{ofCompleted}}</span>
             </div>
             <div layout= "column" layout-align="space-around center">
