@@ -1,4 +1,5 @@
 <md-content layout-padding>
+
     <md-grid-list  
             md-cols="1" md-cols-sm="2" md-cols-md="2" md-cols-gt-md="4"
             md-row-height-gt-md="1:1" md-row-height="4:3" 
@@ -40,9 +41,9 @@
                         <div layout= "column" layout-align="space-around">
                         
                             <span ><strong>Ordre:</strong></span>
-                            <span>&nbsp{{machine.ofQtyPlanned}}</span>
+                            <span>&nbsp{{machine.ofQtyPlanned | number:0}}</span>
                             <span ><strong>Complert:</strong></span>
-                            <span>&nbsp{{machine.ofCompleted}}</span>
+                            <span>&nbsp{{machine.ofCompleted | number:0 }}</span>
                         </div>
                         <div layout= "column" layout-align="space-around center">
                             <h3 >{{machine.ofState}}</h3>
