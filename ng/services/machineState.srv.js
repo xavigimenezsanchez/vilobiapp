@@ -1,32 +1,42 @@
 angular.module('vilobiApp')
     .service('machineStateSrv', function() {
         
-        this.getState = function(state) {
-            var aux = {'name':'desconegut','icon':''}
-            switch (state) {
-                case 'DOWN':
-                    aux.name = 'DOWN';
-                    aux.icon = '';
+        this.get = function(state) {
+        
+            var aux = {};
+            switch (state.trim()) {
+                case 'Down':
+                    aux.name = 'Parat';
+                    aux.icon = 'ic_thumb_down_black_18px.svg';
+                    aux.theme = 'down'
                     break;
-                case 'PULL':
+                case 'Pull':
                     aux.name = 'PULL';
-                    aux.icon = '';
+                    aux.icon = 'ic_get_app_black_18px.svg';
+                    aux.theme = 'pull'
                     break;
-                case 'NCDOWN':
-                    aux.name = 'NCDOWN';
-                    aux.icon = '';
+                case 'NCDown':
+                    aux.name = 'parat sense carrec';
+                    aux.icon = 'ic_sync_disabled_black_18px.svg';
+                    aux.theme = 'ncdown'
                     break;
-                case 'END OF OPERATION':
-                    aux.name = 'END OF OPERATION';
-                    aux.icon = '';
+                case 'End of Operation':
+                    aux.name = 'final operació';
+                    aux.icon = 'ic_done_black_18px.svg';
+                    aux.theme = 'end'
                     break;
-                case 'SETUP':
-                    aux.name = 'SETUP';
-                    aux.icon = '';
+                case 'Setup':
+                    aux.name = 'manteniment';
+                    aux.icon = 'ic_build_black_18px.svg';
+                    aux.theme = 'setup'
                     break;
-                case 'PROCESS':
-                    aux.name = 'PROCESS';
-                    aux.icon = '';
+                case 'Process':
+                    aux.name = 'en procés';
+                    aux.icon = 'ic_loop_black_18px.svg';
+                    aux.theme = 'process'
+                    break;
+                default:
+                    aux = {'name':'desconegut','icon':'ic_error_black_18px.svg', 'theme' : 'error'};
                     break;
             }
             return aux;

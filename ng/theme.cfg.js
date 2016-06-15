@@ -61,6 +61,19 @@ angular.module('vilobiApp')
             .primaryPalette('breadcrumbsPaletteName', {
                 'default': '50'
             });
-
+        $mdThemingProvider.theme('process')
+            .backgroundPalette('green');
+        $mdThemingProvider.theme('setup')
+            .backgroundPalette('amber');
+        $mdThemingProvider.theme('pull')
+            .backgroundPalette('blue');
+        $mdThemingProvider.theme('end')
+            .backgroundPalette('red');
+        $mdThemingProvider.theme('ncdown')
+            .backgroundPalette('orange');
+        $mdThemingProvider.theme('down')
+            .backgroundPalette('deep-orange');
+        $mdThemingProvider.theme('error')
+            .backgroundPalette('grey');
         });
        

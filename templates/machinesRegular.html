@@ -1,14 +1,14 @@
 <md-content layout-padding>
 
-    <md-grid-list  
+    <md-grid-list ng-cloak
             md-cols="1" md-cols-sm="2" md-cols-md="2" md-cols-gt-md="4"
             md-row-height-gt-md="1:1" md-row-height="4:3" 
              >
-            <md-grid-tile ng-repeat="machine in machines track by $index">
-                <md-card flex="95">
-                    <md-card-header>
-                    <md-card-avatar>
-                        <img class="md-user-avatar" src="img/cerutti11.jpg"/>
+            <md-grid-tile ng-repeat="machine in machines track by $index" >
+                <md-card flex="95"  md-theme="{{machine.ofState.theme}}" >
+                    <md-card-header >
+                    <md-card-avatar >
+                        <md-icon md-svg-src="img/icons/{{machine.ofState.icon}}"></md-icon>
                     </md-card-avatar>
                     <md-card-header-text>
                         <span class="md-headline"><!--strong>Màquina: </strong-->{{machine.name}}</span>
@@ -42,11 +42,11 @@
                         
                             <span ><strong>Ordre:</strong></span>
                             <span>&nbsp{{machine.ofQtyPlanned | number:0}}</span>
-                            <span ><strong>Complert:</strong></span>
+                            <span ng-if="machine.ofCompleted"><strong>Complert:</strong></span>
                             <span>&nbsp{{machine.ofCompleted | number:0 }}</span>
                         </div>
                         <div layout= "column" layout-align="space-around center">
-                            <h3 >{{machine.ofState}}</h3>
+                            <span class="md-subhead">{{machine.ofState.name}}</span>
                         </div>
                     </div>
                     </md-card-content>

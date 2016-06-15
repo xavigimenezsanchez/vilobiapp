@@ -11,7 +11,6 @@ angular.module('vilobiApp')
         }
         this.setState = function(last) {
             this.lastState.push(last);
-            console.log(this.lastState);
         }
         this.getState = function() {
             return this.lastState.pop();

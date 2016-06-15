@@ -1,9 +1,15 @@
 angular.module('vilobiApp')
-    .controller('machinesRegularController', function($scope, $q, $http, supervisorSrv, $stateParams, $location, $state, $interval, $timeout, $mdSidenav, driverSrv) {
+    .controller('machinesRegularController', function($scope, $q, $http, supervisorSrv, $stateParams, $location, $state, $interval, $timeout, $mdSidenav, driverSrv, machineStateSrv) {
         var machine = $stateParams.id;
         var machines = [];
         var machineNames = $q.defer();
         var intervalMachines;
+
+        $scope.machineState = machineStateSrv.get; 
+        /*function() {
+           return {'name':'patata', 'icon':'paaaaa'};  
+        }; //machineStateSrv.get;*/
+
         $scope.machines = [];
 
         $scope.goSupervisor = function() {
@@ -58,8 +64,8 @@ angular.module('vilobiApp')
         
         
         function machineNow() {
-            
-            $scope.machines = [];
+            var machinesaux =   [];
+           
             machines.forEach(function(machine, index, array){
                 var aux ={};
                 aux['name'] = machine.name;
@@ -70,7 +76,11 @@ angular.module('vilobiApp')
                         if (name[0]) {
                             aux['ofActual'] = name[0]['PrOdId'];
                             aux['ofOpr'] = name[0]['OprNum'];
-                            aux.ofState = name[0]['LastTimeJobType'];
+                            //aux.ofState = name[0]['LastTimeJobType'];
+                            /* 
+                                Add machineState Service to a aux 
+                            */
+                            aux.ofState = machineStateSrv.get(name[0]['LastTimeJobType']);
                             $http.get('../api/of/desc/' + name[0]['PrOdId'])
                                 .success(function(desc) {
                                     aux.ofDescription = desc[0]['ItemDesc'];
@@ -100,15 +110,17 @@ angular.module('vilobiApp')
                                                 aux.ofCompletedPercent = comp[0]['StkQty']*100/qty[0]['OrderQty'];    
                                             }
                                             
-                                        $scope.machines[index] =aux; 
+                                       machinesaux[index] =aux;
+                                       $scope.machines[index] = aux; 
                                         })
                                 });
                         } else {
-                            $scope.machines[index] =aux;
+                            machinesaux[index] =aux;
+                            $scope.machines[index] = aux;
                         }
                     })
-            } )
-            
+            } );
+             //$scope.machines = machinesaux;           
         }
         
        
