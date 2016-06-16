@@ -96,7 +96,12 @@ angular.module('vilobiApp')
                                         */
                                         $http.get('../api/printer/' + name[0]['PrOdId'])
                                             .success(function(q) {
-                                                aux.ofQtyPlanned = q[0]['quantity']; 
+                                                if (q[0]) {
+                                                    aux.ofQtyPlanned = q[0]['quantity'];
+                                                } else {
+                                                    aux.ofQtyPlanned = null;
+                                                }
+                                                 
                                             })
                                     } else {
                                         aux.ofQtyPlanned = qty[0]['OrderQty'];
