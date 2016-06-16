@@ -135,6 +135,7 @@ angular.module('vilobiApp')
              //$scope.machines = machinesaux;   
              machinesDates.promise.then(function() {
                  $scope.machines = machinesaux;
+                 console.log($scope.machines);
              })        
         }
         
