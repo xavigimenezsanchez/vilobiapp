@@ -2,13 +2,12 @@ angular.module('vilobiApp')
     .controller('machinesRegularController', function($scope, $q, $http, supervisorSrv, $stateParams, $location, $state, $interval, $timeout, $mdSidenav, driverSrv, machineStateSrv) {
         var machine = $stateParams.id;
         var machines = [];
+        var machinesaux =   [];
         var machineNames = $q.defer();
+        var machinesDates = $q.defer();
+
         var intervalMachines;
 
-        $scope.machineState = machineStateSrv.get; 
-        /*function() {
-           return {'name':'patata', 'icon':'paaaaa'};  
-        }; //machineStateSrv.get;*/
 
         $scope.machines = [];
 
@@ -64,8 +63,8 @@ angular.module('vilobiApp')
         
         
         function machineNow() {
-            var machinesaux =   [];
-           
+            
+            machinesaux =   [];
             machines.forEach(function(machine, index, array){
                 var aux ={};
                 aux['name'] = machine.name;
@@ -111,16 +110,22 @@ angular.module('vilobiApp')
                                             }
                                             
                                        machinesaux[index] =aux;
-                                       $scope.machines[index] = aux; 
+                                       
                                         })
                                 });
                         } else {
                             machinesaux[index] =aux;
-                            $scope.machines[index] = aux;
+                            
                         }
-                    })
+                    });
+                    if (array.length == (index +1)) {
+                            machinesDates.resolve(true);
+                        }
             } );
-             //$scope.machines = machinesaux;           
+             //$scope.machines = machinesaux;   
+             machinesDates.promise.then(function() {
+                 $scope.machines = machinesaux;
+             })        
         }
         
        
