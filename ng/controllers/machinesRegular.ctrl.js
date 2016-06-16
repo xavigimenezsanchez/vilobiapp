@@ -75,7 +75,6 @@ angular.module('vilobiApp')
                         if (name[0]) {
                             aux['ofActual'] = name[0]['PrOdId'];
                             aux['ofOpr'] = name[0]['OprNum'];
-                            //aux.ofState = name[0]['LastTimeJobType'];
                             /* 
                                 Add machineState Service to a aux 
                             */
@@ -88,12 +87,14 @@ angular.module('vilobiApp')
                                 .success(function(qty) {
                                     if (name[0]['OprNum'] == 10 && 
                                         (machine.name != 'INKMAKER'  && machine.name != 'NOMAN'
-                                        && machine.name != 'MAN'
+                                        && machine.name != 'MAN' && machine.name != 'KIEFEL 1'
+                                        && machine.name != 'Kiefel-2' && machine.name != 'LAP'
                                         )) {
                                         /* If OF is in state 10 or machine id is diferent 
                                            of INKMAKER we need find out quantity 
                                            in another table: PrOdBOM
                                         */
+                                        
                                         $http.get('../api/printer/' + name[0]['PrOdId'])
                                             .success(function(q) {
                                                 if (q[0]) {
@@ -111,7 +112,10 @@ angular.module('vilobiApp')
                                         .success(function(comp) {
                                             if (comp.length>0) {
                                                 aux.ofCompleted = comp[0]['StkQty'];
-                                                aux.ofCompletedPercent = comp[0]['StkQty']*100/qty[0]['OrderQty'];    
+                                                //aux.ofCompletedPercent = comp[0]['StkQty']*100/qty[0]['OrderQty']; 
+                                                aux.ofCompletedPercent = function() {
+                                                    return this.ofCompleted*100/this.ofQtyPlanned;
+                                                }; //comp[0]['StkQty']*100/qty[0]['OrderQty'];    
                                             }
                                             
                                        machinesaux[index] =aux;
@@ -124,6 +128,7 @@ angular.module('vilobiApp')
                         }
                     });
                     if (array.length == (index +1)) {
+                            
                             machinesDates.resolve(true);
                         }
             } );

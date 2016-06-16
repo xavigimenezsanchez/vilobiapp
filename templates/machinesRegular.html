@@ -5,7 +5,7 @@
             md-row-height-gt-md="1:1" md-row-height="4:3" 
              >
             <md-grid-tile ng-repeat="machine in machines" >
-                <md-card flex="95"  md-theme="{{machine.ofState.theme}}" >
+                <md-card flex="95"  class = "md-whiteframe-6dp" md-theme="{{machine.ofState.theme}}" >
                     <md-card-header >
                     <md-card-avatar >
                         <md-icon md-svg-src="img/icons/{{machine.ofState.icon}}"></md-icon>
@@ -32,10 +32,10 @@
                     <div layout-xs="column" layout="row"  layout-align="space-around">
                         <!--md-progress-circular md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-circular-->
                         <div layout= "column" layout-align="space-around" ng-if="machine.ofCompletedPercent">
-                            <h3 >{{machine.ofCompletedPercent  | number:2}}%</h3>
+                            <h3 >{{machine.ofCompletedPercent()  | number:2}}%</h3>
                             <div>
-                                <md-progress-linear md-mode="determinate" value="{{machine.ofCompletedPercent}}"></md-progress-linear>
-                                <md-progress-linear md-mode="determinate" value="{{machine.ofCompletedPercent}}"></md-progress-linear>
+                                <md-progress-linear md-mode="determinate" value="{{machine.ofCompletedPercent()}}"></md-progress-linear>
+                                <md-progress-linear md-mode="determinate" value="{{machine.ofCompletedPercent()}}"></md-progress-linear>
                             </div>
                         </div>
                         <div layout= "column" layout-align="space-around">
