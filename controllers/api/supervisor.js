@@ -1,6 +1,6 @@
 var router = require("express").Router();
 var db = require("../../db");
-var forEach = require('async-foreach').forEach;
+
 
 
 router.get('/dept', function(req, res, next) {

@@ -1,6 +1,6 @@
 {
   "name": "vilobiapp",
-  "version": "0.1",
+  "version": "0.0.1",
   "description": "Projecte Viloví",
   "dependencies": {
     "angular-ui-router": "^0.3.0",
