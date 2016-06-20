@@ -1,5 +1,5 @@
 angular.module('vilobiApp')
-    .controller('mainController' , function($scope,$rootScope) {
+    .controller('mainController' , function($scope,$rootScope, supervisorSrv) {
         $scope.bodyStyle = '';
         $scope.showMenu = true;
         $scope.breadcrumbs = 'home';
@@ -19,6 +19,7 @@ angular.module('vilobiApp')
         
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
             $scope.breadcrumbs = toState.name;
+            supervisorSrv.killTimers();
          })
         
     });

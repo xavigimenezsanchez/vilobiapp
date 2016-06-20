@@ -41,10 +41,11 @@ angular.module('vilobiApp')
         
         function machineNow() {
             console.log('../../api/supervisor/detall/' + $stateParams.id);
-            $http.get('../../api/supervisor/deptall/' + $stateParams.id)
-                    .then(function(mach){
+            //$http.get('../../api/supervisor/deptall/' + $stateParams.id)
+            supervisorSrv.machinesAll($stateParams.id)
+                    .success(function(mach){
                         console.log(mach);
-                        mach.data.forEach(function(element,index) {
+                        mach.forEach(function(element,index) {
                             $scope.machines[index] = element;
                             $scope.machines[index]['ofState'] = machineStateSrv.get(element.status); 
                             if (element.quantityPlanned && element.quantityPlanned != 0 && element.ofCompleted) {
@@ -61,6 +62,6 @@ angular.module('vilobiApp')
         }
         
         machineNow();
-        intervalMachines = $interval(machineNow,60000);
+        supervisorSrv.machinesAllTimer = $interval(machineNow,5000);
         
     });
