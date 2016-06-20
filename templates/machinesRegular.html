@@ -3,7 +3,7 @@
     <md-grid-list ng-cloak
             md-cols="1" md-cols-sm="2" md-cols-md="2" md-cols-gt-md="4"
             md-row-height-gt-md="1:1" md-row-height="4:3">
-            <md-grid-tile ng-repeat="machine in machines track by machine.name" >
+            <md-grid-tile ng-repeat="machine in machines track by $index" >
                 <md-card flex="95"  class = "md-whiteframe-6dp" md-theme="{{machine.ofState.theme}}" >
                     <md-card-header >
                     <md-card-avatar >
@@ -22,30 +22,30 @@
                     <md-card-title>
                     <md-card-title-text>
                         <!--span class="md-headline"><strong>OF:</strong>{{machine.ofActual}}</span-->
-                        <span><strong>{{machine.ofActual}}</strong></span>
+                        <span><strong>{{machine.of}}</strong></span>
                         <!--div><strong>Descripció:</strong></div-->
-                        <span class="md-subhead">&nbsp&nbsp{{machine.ofDescription}}</span>
+                        <span class="md-subhead">&nbsp&nbsp{{machine.desc}}</span>
                     </md-card-title-text>
                     </md-card-title>
                     <md-card-content>
                     <div layout-xs="column" layout="row"  layout-align="space-around">
                         <!--md-progress-circular md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-circular-->
                         <div layout= "column" layout-align="space-around" ng-if="machine.ofCompletedPercent">
-                            <h3 >{{machine.ofCompletedPercent()  | number:2}}%</h3>
+                            <h3 >{{machine.ofCompletedPercent  | number:2}}%</h3>
                             <div>
-                                <md-progress-linear md-mode="determinate" value="{{machine.ofCompletedPercent()}}"></md-progress-linear>
-                                <md-progress-linear md-mode="determinate" value="{{machine.ofCompletedPercent()}}"></md-progress-linear>
+                                <md-progress-linear md-mode="determinate" value="{{machine.ofCompletedPercent}}"></md-progress-linear>
+                                <md-progress-linear md-mode="determinate" value="{{machine.ofCompletedPercent}}"></md-progress-linear>
                             </div>
                         </div>
                         <div layout= "column" layout-align="space-around">
                         
                             <span ><strong>Ordre:</strong></span>
-                            <span>&nbsp{{machine.ofQtyPlanned | number:0}}</span>
+                            <span>&nbsp{{machine.quantityPlanned | number:0}}</span>
                             <span ng-if="machine.ofCompleted"><strong>Complert:</strong></span>
                             <span>&nbsp{{machine.ofCompleted | number:0 }}</span>
                         </div>
                         <div layout= "column" layout-align="space-around center">
-                            <span class="md-subhead">{{machine.ofState.name}}</span>
+                            <span class="md-subhead">{{machine.status}}</span>
                         </div>
                     </div>
                     </md-card-content>

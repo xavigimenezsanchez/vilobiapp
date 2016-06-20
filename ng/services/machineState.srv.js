@@ -4,6 +4,7 @@ angular.module('vilobiApp')
         this.get = function(state) {
         
             var aux = {};
+            if (!state) state='';
             switch (state.trim()) {
                 case 'Down':
                     aux.name = 'Parat';

@@ -31,6 +31,7 @@ router.get('/deptall/:id', function(req, res, next) {
             qty.forEach(function(item, index, arr) {
                 aux[index]= {};
                 aux[index]['id'] = item['WrkCtrId'].trim();
+                
                 if(cont++ == (arr.length-1)) {  // if 1
                     var cont2 = 0; // Used for start next select when it has been processed current select
                    aux.forEach(function(item, index, arr) {
@@ -38,70 +39,104 @@ router.get('/deptall/:id', function(req, res, next) {
                        new db.axapta.Request().query('select NAME from ENP_ES_AX_PRD.dbo.WRKCTRTABLE where WRKCTRID = \'' + item.id + '\'')
                         .then(function (name) {
                             aux[index]['name'] = name[0]['NAME'].trim();
+                             
                             if(cont2++ == (arr.length-1)) {  // if 2
+                                
                                 var cont3 = 0; // Used for start next select when it has been processed current select
                                 aux.forEach(function(item, index, arr) {
                                   // Get of, oprNum and Status
+
                                   new db.shopFloor.Request().query('select top 1  PrOdId, OprNum, LastTimeCode, LastTimeJobType from CSF_ENP_TOR.dbo.SF where companyId=\'ent\' and WrkCtrId=\'' + item.id + '\' ORDER BY lASTtIMEtIME desc')
                                     .then(function (name) {
-                                        aux[index]['of'] = name[0]['PrOdId']
-                                        aux[index]['oprNum'] = name[0]['OprNum'];
-                                        aux[index]['Status'] = name[0]['LastTimeJobType'].trim();
+                                        
+                                        
+                                        
+                                        if (name[0]){ 
+                                            aux[index]['of'] = name[0]['PrOdId']
+                                            aux[index]['oprNum'] = name[0]['OprNum'];
+                                            aux[index]['status'] = name[0]['LastTimeJobType'].trim();
+                                        }
                                         if (cont3++ == (arr.length-1)) {   // if 3
                                             // Get ItemId, desc, custNuo, custName and ufd
-
+                                            
                                             var cont4 = 0; // Used for start next select when it has been processed current select
+                                            
                                             aux.forEach(function(item, index, arr) {
                                                 new db.shopFloor.Request().query('SELECT Item.ItemId, Item.ItemDesc, ItemAdd.CustNo, ItemAdd.CustName, ItemAdd.UDF01 FROM CSF_ENP_TOR.dbo.PrOdItem Item WITH (NOLOCK) INNER JOIN CSF_ENP_TOR.dbo.PrOdItemAddData ItemAdd WITH (NOLOCK) ON Item.CompanyId = ItemAdd.CompanyId AND Item.PrOdId = ItemAdd.PrOdId AND Item.AppPrOdId = ItemAdd.AppPrOdId AND Item.ItemId = ItemAdd.ItemId AND Item.SizeId = ItemAdd.SizeId AND Item.SizeId2 = ItemAdd.SizeId2 AND Item.ColorId = ItemAdd.ColorId WHERE Item.CompanyId = \'ent\'  AND Item.PrOdId = \'' + item.of + '\'')
                                                     .then(function (desc) {
-                                                        aux[index]['ItemId'] = desc[0]['ItemId'].trim();
-                                                        aux[index]['desc'] = desc[0]['ItemDesc'].trim();
-                                                        aux[index]['custNo'] = desc[0]['CustNo'].trim();
-                                                        aux[index]['custName'] = desc[0]['CustName'].trim();
-                                                        aux[index]['ufd'] = desc[0]['UDF01'].trim();
+                                                        
+                                                        if (desc[0]){    
+                                                            aux[index]['ItemId'] = desc[0]['ItemId'].trim();
+                                                            aux[index]['desc'] = desc[0]['ItemDesc'].trim();
+                                                            aux[index]['custNo'] = desc[0]['CustNo'].trim();
+                                                            aux[index]['custName'] = desc[0]['CustName'].trim();
+                                                            aux[index]['ufd'] = desc[0]['UDF01'].trim();
+                                                        }
                                                         if (cont4++ == (arr.length - 1)) {
                                                             // Get QuantityPlanned
                                                             var cont5 = 0;
+                                                            
                                                             aux.forEach(function(item, index, arr) {
                                                                 new db.shopFloor.Request().query('SELECT PrOdId, OrderQty, SalesUnit AS Unitat, LineNum, ItemId, ItemDesc, StkUnit, FinishedWidth, WidthUnit, FinishedLength, LengthUnit, NumAcross, Yield, YieldUnit, SalesId,SalesLineNum, OrdDueTime, InventTransId, SpecId, AppPrOdId, SizeDesc, PackageQtyPer, PackageUnit, PackageType, PackageWeight, PlanSetNum, ComputerName FROM CSF_ENP_TOR.dbo.PrOdItem WHERE PrOdId = \'' + item.of +'\'')
                                                                 .then(function(qty) {
-                                                                    console.log(item.name);
-                                                                    if (item.oprNum == 10 && 
-                                                                        (item.name != 'INKMAKER'  && item.name != 'NOMAN'
-                                                                        && item.name != 'MAN' && item.name != 'C120'
-                                                                        )) {
-                                                                            /* If OF is in state 10 or machine id is diferent 
-                                                                                of INKMAKER or NOMAN OR MAN we need find out quantity 
-                                                                                in another table: PrOdBOM
-                                                                            */
-                                                                            new db.shopFloor.Request().query('SELECT StkReqQty as quantity from CSF_ENP_TOR.dbo.PrOdBOM where PrOdId = \'' + item.of +'\' AND OprNum = 10 AND ItemId LIKE \'WIP%\' AND SFBOMRevision = 0 ')
-                                                                                .then(function(q) {
-                                                                                    console.log('*'+item.id+' '+q[0]['quantity']);
-                                                                                    aux[index]['quantityPlanned'] = q[0]['quantity'];
-                                                                                    cont5++;
-                                                                                })
-                                                                        } else {
-                                                                            console.log(item.id+' '+qty[0]['OrderQty']);
-                                                                            aux[index]['quantityPlanned'] = qty[0]['OrderQty'];
-                                                                            cont5++;
-                                                                        } // end if QuantityPlanned
-                                                                        console.log('contador:' + cont5);
-                                                                        if (cont5 == (arr.length )) {
-                                                                            // get ofCompleted
+                                                                        
+                                                                        if (qty[0]) aux[index]['quantityPlanned'] = qty[0]['OrderQty'];      
+                                                                        if (++cont5 == (arr.length -1)) {
+                                                                            // get QuantityPlanned if dates come from Printer
                                                                             var cont6 = 0;
-                                                                            console.log('++++++++++++++++++++++++++:'+cont6);
                                                                             aux.forEach(function(item, index, arr) {
-                                                                                new db.shopFloor.Request().query('SELECT ItemId, SUM(StkQty) AS StkQty, SUM(PQty) AS PQty, PUnit, SUM(SQty) AS SQty, SUnit, SUM(TQty) AS TQty, TUnit, SUM(FtQty) AS FtQty, SUM(LbQty) AS LbQty FROM CSF_ENP_TOR.dbo.SFMatl WITH (NOLOCK) WHERE CompanyId = \'ent\'  AND PrOdId = \''+ item.of +'\'  AND OprNum = ' + item.oprNum +'  AND WrkCtrId = \'' + item.id +'\'  AND TranType IN (\'OFF-FIN\',\'OFF-WIP\') GROUP BY ItemId, PUnit, SUnit, TUnit')
-                                                                                    .then(function(comp) {
-                                                                                        cont6++;
-                                                                                        aux[index]['ofCompleted'] = comp[0]['StkQty'];
-                                                                                        console.log(item.ofCompleted +' '+cont6+' ' + arr.length+ ' '+ (cont6 == (arr.length )));
-                                                                                        if (cont6 == (arr.length )) {
-                                                                                            res.json(aux);
+                                                                                new db.shopFloor.Request().query('SELECT StkReqQty as quantity from CSF_ENP_TOR.dbo.PrOdBOM where PrOdId = \'' + item.of +'\' AND OprNum = 10 AND ItemId LIKE \'WIP%\' AND SFBOMRevision = 0 ')
+                                                                                    .then(function(q) {
+                                                                                        //console.log(item.id+'*');
+                                                                                        if ((q[0] &&item.oprNum == 10 && 
+                                                                                            (item.id == 'CER1'  || item.id == 'CER2' || item.id == 'Mexi'
+                                                                                            || item.id == 'HP20000' || item.id == 'CER3A' || item.id == 'CER3B'
+                                                                                            )) || 
+                                                                                             (q[0] &&item.oprNum == 20 && 
+                                                                                            (item.id == 'Combi'  || item.id == 'Zenit'
+                                                                                            || item.id == 'SL2' 
+                                                                                            )))
+                                                                                            
+                                                                                            {
+                                                                                                /* If OF is in state 10 or machine id is diferent 
+                                                                                                    of INKMAKER or NOMAN OR MAN we need find out quantity 
+                                                                                                    in another table: PrOdBOM
+                                                                                                */
+                                                                                                    aux[index]['quantityPlanned'] = q[0]['quantity'];
+                                                                                                    //console.log(item);
+                                                                                            }
+                                                                                            
+                                                                                        if(cont6++ == (arr.length - 1)) {
+                                                                                            // get ofCompleted
+                                                                                            var cont7 = 0;
+                                                                                            
+                                                                                            aux.forEach(function(item, index, arr) {
+                                                                                                console.log(item.of);
+                                                                                                console.log(item.oprNum);
+                                                                                                console.log(item.id);
+                                                                                                console.log('*****************');
+                                                                                                if (item.oprNum== undefined || item.id == undefined) cont7++;
+                                                                                                new db.shopFloor.Request().query('SELECT ItemId, SUM(StkQty) AS StkQty, SUM(PQty) AS PQty, PUnit, SUM(SQty) AS SQty, SUnit, SUM(TQty) AS TQty, TUnit, SUM(FtQty) AS FtQty, SUM(LbQty) AS LbQty FROM CSF_ENP_TOR.dbo.SFMatl WITH (NOLOCK) WHERE CompanyId = \'ent\'  AND PrOdId = \''+ item.of +'\'  AND OprNum = ' + item.oprNum +'  AND WrkCtrId = \'' + item.id +'\'  AND TranType IN (\'OFF-FIN\',\'OFF-WIP\') GROUP BY ItemId, PUnit, SUnit, TUnit')
+                                                                                                    .then(function(comp) {
+                                                                                                        
+                                                                                                        
+                                                                                                        cont7++
+                                                                                                        if (comp.length >0) {
+                                                                                                            
+                                                                                                            aux[index]['ofCompleted'] = comp[0]['StkQty'];
+                                                                                                        } 
+                                                                                                        if (cont7 == (arr.length )) {
+                                                                                                            
+                                                                                                            res.json(aux);
+                                                                                                        }
+                                                                                                    }) 
+                                                                                                
+                                                                                            }) // end get OfCompleted
                                                                                         }
-                                                                                    }) 
-                                                                                
-                                                                            }) // end get OfCompleted
+
+                                                                                    })
+                                                                            }); // end get QuantityPlanned if dates come from Printer   
+                                                                            
                                                                         }  //end if cont 5
                                                                 })
                                                             }) // end get QuantityPlanned
