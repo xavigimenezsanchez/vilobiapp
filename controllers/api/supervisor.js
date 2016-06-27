@@ -153,4 +153,77 @@ router.get('/deptall/:id', function(req, res, next) {
             }) //end qty.forEach
         });
 });
+
+router.get('/deptone/:id', function(req, res, next) {
+    var aux = [];
+    aux['id']= req.params.id;
+    new db.axapta.Request().query('select NAME from ENP_ES_AX_PRD.dbo.WRKCTRTABLE where WRKCTRID = \'' + req.params.id + '\'')
+        // This select returns machine's name from machine's id
+        .then(function(name) {
+            aux['name'] = name[0]['NAME'].trim();
+            
+            new db.axapta.Request().query('select top 1  PrOdId, OprNum, LastTimeCode, LastTimeJobType from CSF_ENP_TOR.dbo.SF where companyId=\'ent\' and WrkCtrId=\'' + req.params.id + '\' ORDER BY lASTtIMEtIME desc') 
+            // Get OF, oprNum and Status
+            .then(function(name) {
+                console.log('patata');
+                aux['of'] = name[0]['PrOdId'].trim();
+                aux['oprNum'] = name[0]['OprNum'];
+                aux['status'] = name[0]['LastTimeJobType'].trim();
+                new db.axapta.Request().query('SELECT Item.ItemId, Item.ItemDesc, ItemAdd.CustNo, ItemAdd.CustName, ItemAdd.UDF01 FROM CSF_ENP_TOR.dbo.PrOdItem Item WITH (NOLOCK) INNER JOIN CSF_ENP_TOR.dbo.PrOdItemAddData ItemAdd WITH (NOLOCK) ON Item.CompanyId = ItemAdd.CompanyId AND Item.PrOdId = ItemAdd.PrOdId AND Item.AppPrOdId = ItemAdd.AppPrOdId AND Item.ItemId = ItemAdd.ItemId AND Item.SizeId = ItemAdd.SizeId AND Item.SizeId2 = ItemAdd.SizeId2 AND Item.ColorId = ItemAdd.ColorId WHERE Item.CompanyId = \'ent\'  AND Item.PrOdId = \'' + aux.of + '\'')
+                // Get ItemId, desc, custNuo, custName and ufd
+                .then(function(desc) {
+                    if (desc[0]){
+                        aux['ItemId'] = desc[0]['ItemId'].trim();
+                        aux['desc'] = desc[0]['ItemDesc'].trim();
+                        aux['custNo'] = desc[0]['CustNo'].trim();
+                        aux['custName'] = desc[0]['CustName'].trim();
+                        aux['ufd'] = desc[0]['UDF01'].trim();
+                    }
+                    console.log(aux);
+                    new db.axapta.Request().query('SELECT PrOdId, OrderQty, SalesUnit AS Unitat, LineNum, ItemId, ItemDesc, StkUnit, FinishedWidth, WidthUnit, FinishedLength, LengthUnit, NumAcross, Yield, YieldUnit, SalesId,SalesLineNum, OrdDueTime, InventTransId, SpecId, AppPrOdId, SizeDesc, PackageQtyPer, PackageUnit, PackageType, PackageWeight, PlanSetNum, ComputerName FROM CSF_ENP_TOR.dbo.PrOdItem WHERE PrOdId = \'' + aux.of +'\'')
+                    //
+                    .then(function(qty) {
+                        console.log(qty);
+                        if (qty[0]) aux['quantityPlanned'] = qty[0]['OrderQty']; 
+                        console.log(qty);
+                        new db.shopFloor.Request().query('SELECT StkReqQty as quantity from CSF_ENP_TOR.dbo.PrOdBOM where PrOdId = \'' + aux.of +'\' AND OprNum = 10 AND ItemId LIKE \'WIP%\' AND SFBOMRevision = 0 ')
+                        .then(function(q) {
+                            console.log(q);
+                            if ((q[0] &&item.oprNum == 10 && 
+                                (item.id == 'CER1'  || item.id == 'CER2' || item.id == 'Mexi'
+                                || item.id == 'HP20000' || item.id == 'CER3A' || item.id == 'CER3B'
+                                )) || 
+                                    (q[0] &&item.oprNum == 20 && 
+                                (item.id == 'Combi'  || item.id == 'Zenit'
+                                || item.id == 'SL2' 
+                                )))
+                                
+                                {
+                                    /* If OF is in state 10 or machine id is diferent 
+                                        of INKMAKER or NOMAN OR MAN we need find out quantity 
+                                        in another table: PrOdBOM
+                                    */
+                                        aux['quantityPlanned'] = q[0]['quantity'];
+                                        
+                                }
+                                console.log()
+                                new db.shopFloor.Request().query('SELECT ItemId, SUM(StkQty) AS StkQty, SUM(PQty) AS PQty, PUnit, SUM(SQty) AS SQty, SUnit, SUM(TQty) AS TQty, TUnit, SUM(FtQty) AS FtQty, SUM(LbQty) AS LbQty FROM CSF_ENP_TOR.dbo.SFMatl WITH (NOLOCK) WHERE CompanyId = \'ent\'  AND PrOdId = \''+ aux.of +'\'  AND OprNum = ' + aux.oprNum +'  AND WrkCtrId = \'' + aux.id +'\'  AND TranType IN (\'OFF-FIN\',\'OFF-WIP\') GROUP BY ItemId, PUnit, SUnit, TUnit')
+                                .then(function(comp) {
+                                    console.log(aux);
+                                    console.log(comp.length);
+                                    if (comp.length >0) {                                                                    
+                                        aux['ofCompleted'] = comp[0]['StkQty'];
+                                    } else {
+                                        aux['ofCompleted'] = 0;
+                                    }
+                                    console.log(aux);
+                                    res.json(aux);
+                                })
+                        });
+                    });
+                });
+            });
+        });
+
+});
 module.exports = router;
