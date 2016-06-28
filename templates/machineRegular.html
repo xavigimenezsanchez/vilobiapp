@@ -1,41 +1,47 @@
 <md-content layout-padding >
-    <md-card flex-offset-gt-sm="25" flex-gt-md="50">
+    <md-card  md-theme-watch="true" flex-offset-gt-sm="25" flex-gt-md="50" class = "md-whiteframe-6dp" md-theme="{{machineInfo.ofState.theme}}">
         <md-card-header>
           <md-card-avatar>
-            <img class="md-user-avatar" src="img/cerutti11.jpg"/>
+            <md-icon md-svg-src="img/icons/{{machineInfo.ofState.icon}}"></md-icon>
           </md-card-avatar>
           <md-card-header-text>
-            <span class="md-headline"><strong>{{machineName}} </strong></span>
+              <span class="md-headline"><!--strong>Màquina: </strong-->{{machineInfo.name}}</span>
+              <span class="md-headline"><!--strong>Màquina: </strong-->{{machineInfo.custName}}</span>              
           </md-card-header-text>
-          <md-button  class="md-primary" ng-click="goBack()"  aria-label="Go">
-            <md-icon md-svg-src="img/icons/ic_backspace_black_18px.svg"></md-icon>
+
+          <md-button  class="md-fab md-mini md-primary md-hue-2" ng-click="goBigScreen(machineInfo.id)"  aria-label="Go">
+              <md-icon md-svg-src="img/icons/ic_visibility_white_18px.svg"></md-icon>
           </md-button>
-        </md-card-header>
-        <md-card-title>
+          </md-card-header>
+          <md-card-title>
           <md-card-title-text>
-            <span class="md-headline"><strong>OF:</strong>{{ofActual}}</span>
-            <span class="md-subhead"><strong>Descripció:</strong>{{ofDescription}}</span>
+              <!--span class="md-headline"><strong>OF:</strong>{{machine.ofActual}}</span-->
+              <span><strong>{{machineInfo.of}}/{{machineInfo.ufd}}</strong></span>
+              <!--div><strong>Descripció:</strong></div-->
+              <span class="md-subhead">&nbsp&nbsp{{machineInfo.desc}}</span>
           </md-card-title-text>
-        </md-card-title>
-        <md-card-content>
-           <div layout-xs="column" layout="row"  layout-align="space-around">
-            <!--md-progress-circular md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-circular-->
-            <div layout= "column" layout-align="space-around">
-              <h2 class="md-display-1">{{ofCompletedPercent  | number:2}}%</h2>
-              <div>
-                <md-progress-linear md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-linear>
-                <md-progress-linear md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-linear>
+          </md-card-title>
+          <md-card-content>
+          <div layout-xs="column" layout="row"  layout-align="space-around">
+              <!--md-progress-circular md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-circular-->
+              <div layout= "column" layout-align="space-around" ng-if="machineInfo.ofCompletedPercent">
+                  <h3 >{{machineInfo.ofCompletedPercent  | number:2}}%</h3>
+                  <div>
+                      <md-progress-linear md-mode="determinate" value="{{machineInfo.ofCompletedPercent}}"></md-progress-linear>
+                      <md-progress-linear md-mode="determinate" value="{{machineInfo.ofCompletedPercent}}"></md-progress-linear>
+                  </div>
               </div>
-            </div>
-            <div layout= "column" layout-align="space-around">
-              <br/>
-                <span class="md-headline"><strong>Ordre:</strong>{{ofQtyPlanned | number:2}}</span>
-                <span class="md-headline"><strong>Complert:</strong>{{ofCompleted}}</span>
-            </div>
-            <div layout= "column" layout-align="space-around center">
-              <h2 class="md-display-1">{{ofState}}</h2>
-            </div>
+              <div layout= "column" layout-align="space-around">
+              
+                  <span ><strong>Ordre:</strong></span>
+                  <span>&nbsp{{machineInfo.quantityPlanned | number:0}}</span>
+                  <span ng-if="machineInfo.ofCompleted"><strong>Complert:</strong></span>
+                  <span>&nbsp{{machineInfo.ofCompleted | number:0 }}</span>
+              </div>
+              <div layout= "column" layout-align="space-around center">
+                  <span class="md-subhead">{{machineInfo.status}}</span>
+              </div>
           </div>
-        </md-card-content>
+          </md-card-content>
       </md-card>
 </md-content>

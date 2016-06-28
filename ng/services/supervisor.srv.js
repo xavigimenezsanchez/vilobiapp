@@ -1,7 +1,8 @@
 angular.module('vilobiApp')
     .factory('supervisorSrv', function($http, $interval) {
         var urlBase = '../../api/supervisor/dept';
-        var urlBase2 = '../../api/supervisor/deptall';
+        var deptAll = '../../api/supervisor/deptall';
+        var deptOne = '../../api/supervisor/deptone';
      
         this.departaments = function() {
             return $http.get(urlBase);
@@ -10,7 +11,11 @@ angular.module('vilobiApp')
             return $http.get(urlBase+'/'+dept);
         }
         this.machinesAll = function(dept) {
-            return $http.get(urlBase2 + '/' + dept)
+            return $http.get(deptAll + '/' + dept)
+        }
+        this.machineOne = function(mach) {
+            console.log(deptOne + '/' + mach);
+            return $http.get(deptOne + '/' + mach)
         }
         this.machinesAllTimer= null;
 

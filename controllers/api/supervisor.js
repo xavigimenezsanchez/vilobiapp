@@ -87,7 +87,6 @@ router.get('/deptall/:id', function(req, res, next) {
                                                                             aux.forEach(function(item, index, arr) {
                                                                                 new db.shopFloor.Request().query('SELECT StkReqQty as quantity from CSF_ENP_TOR.dbo.PrOdBOM where PrOdId = \'' + item.of +'\' AND OprNum = 10 AND ItemId LIKE \'WIP%\' AND SFBOMRevision = 0 ')
                                                                                     .then(function(q) {
-                                                                                        //console.log(item.id+'*');
                                                                                         if ((q[0] &&item.oprNum == 10 && 
                                                                                             (item.id == 'CER1'  || item.id == 'CER2' || item.id == 'Mexi'
                                                                                             || item.id == 'HP20000' || item.id == 'CER3A' || item.id == 'CER3B'
@@ -156,8 +155,8 @@ router.get('/deptall/:id', function(req, res, next) {
 
 router.get('/deptone/:id', function(req, res, next) {
     var aux = {};
-    var patata = {'hola':'qye fas'};
     aux['id']= req.params.id;
+    console.log('*****************************');
     new db.axapta.Request().query('select NAME from ENP_ES_AX_PRD.dbo.WRKCTRTABLE where WRKCTRID = \'' + req.params.id + '\'')
         // This select returns machine's name from machine's id
         .then(function(name) {
@@ -172,6 +171,7 @@ router.get('/deptone/:id', function(req, res, next) {
                 new db.axapta.Request().query('SELECT Item.ItemId, Item.ItemDesc, ItemAdd.CustNo, ItemAdd.CustName, ItemAdd.UDF01 FROM CSF_ENP_TOR.dbo.PrOdItem Item WITH (NOLOCK) INNER JOIN CSF_ENP_TOR.dbo.PrOdItemAddData ItemAdd WITH (NOLOCK) ON Item.CompanyId = ItemAdd.CompanyId AND Item.PrOdId = ItemAdd.PrOdId AND Item.AppPrOdId = ItemAdd.AppPrOdId AND Item.ItemId = ItemAdd.ItemId AND Item.SizeId = ItemAdd.SizeId AND Item.SizeId2 = ItemAdd.SizeId2 AND Item.ColorId = ItemAdd.ColorId WHERE Item.CompanyId = \'ent\'  AND Item.PrOdId = \'' + aux.of + '\'')
                 // Get ItemId, desc, custNuo, custName and ufd
                 .then(function(desc) {
+                    console.log('hola1');
                     if (desc[0]){
                         aux['ItemId'] = desc[0]['ItemId'].trim();
                         aux['desc'] = desc[0]['ItemDesc'].trim();
@@ -185,13 +185,14 @@ router.get('/deptone/:id', function(req, res, next) {
                         if (qty[0]) aux['quantityPlanned'] = qty[0]['OrderQty']; 
                         new db.shopFloor.Request().query('SELECT StkReqQty as quantity from CSF_ENP_TOR.dbo.PrOdBOM where PrOdId = \'' + aux.of +'\' AND OprNum = 10 AND ItemId LIKE \'WIP%\' AND SFBOMRevision = 0 ')
                         .then(function(q) {
-                            if ((q[0] &&item.oprNum == 10 && 
-                                (item.id == 'CER1'  || item.id == 'CER2' || item.id == 'Mexi'
-                                || item.id == 'HP20000' || item.id == 'CER3A' || item.id == 'CER3B'
+                            try {
+                                if ((q[0] && aux.oprNum == 10 && 
+                                (aux.id == 'CER1'  || aux.id == 'CER2' || aux.id == 'Mexi'
+                                || aux.id == 'HP20000' || aux.id == 'CER3A' || aux.id == 'CER3B'
                                 )) || 
-                                    (q[0] &&item.oprNum == 20 && 
-                                (item.id == 'Combi'  || item.id == 'Zenit'
-                                || item.id == 'SL2' 
+                                    (q[0] && aux.oprNum == 20 && 
+                                (aux.id == 'Combi'  || aux.id == 'Zenit'
+                                || aux.id == 'SL2' 
                                 )))
                                 
                                 {
@@ -199,11 +200,18 @@ router.get('/deptone/:id', function(req, res, next) {
                                         of INKMAKER or NOMAN OR MAN we need find out quantity 
                                         in another table: PrOdBOM
                                     */
+                        console.log('estic dintre');
                                         aux['quantityPlanned'] = q[0]['quantity'];
                                         
                                 }
+                            } catch (error) {
+                                console.log(error);
+                            }
+                            
+                                console.log(aux);
                                 new db.shopFloor.Request().query('SELECT ItemId, SUM(StkQty) AS StkQty, SUM(PQty) AS PQty, PUnit, SUM(SQty) AS SQty, SUnit, SUM(TQty) AS TQty, TUnit, SUM(FtQty) AS FtQty, SUM(LbQty) AS LbQty FROM CSF_ENP_TOR.dbo.SFMatl WITH (NOLOCK) WHERE CompanyId = \'ent\'  AND PrOdId = \''+ aux.of +'\'  AND OprNum = ' + aux.oprNum +'  AND WrkCtrId = \'' + aux.id +'\'  AND TranType IN (\'OFF-FIN\',\'OFF-WIP\') GROUP BY ItemId, PUnit, SUnit, TUnit')
                                 .then(function(comp) {
+                                    console.log('patata');
                                     if (comp.length >0) {                                                                    
                                         aux['ofCompleted'] = comp[0]['StkQty'];
                                     } else {

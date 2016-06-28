@@ -40,8 +40,6 @@ angular.module('vilobiApp')
         
         
         function machineNow() {
-            console.log('../../api/supervisor/detall/' + $stateParams.id);
-            //$http.get('../../api/supervisor/deptall/' + $stateParams.id)
             supervisorSrv.machinesAll($stateParams.id)
                     .success(function(mach){
                         console.log(mach);

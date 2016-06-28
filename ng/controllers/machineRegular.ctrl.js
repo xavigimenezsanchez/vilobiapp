@@ -1,6 +1,7 @@
 angular.module('vilobiApp')
-    .controller('machineRegularController', function($scope, $http, $stateParams, $location, $state, $interval, $timeout, $mdSidenav, driverSrv) {
+    .controller('machineRegularController', function($scope, $http, $stateParams, $location, $state, $interval, $timeout, $mdSidenav, driverSrv, machineStateSrv,supervisorSrv) {
         var machine = $stateParams.id;
+        $scope.machineInfo = {};
         
         $scope.goSupervisor = function() {
             $state.go('common.supervisor');
@@ -15,58 +16,23 @@ angular.module('vilobiApp')
             }
             
         }
-        $http.get('../../api/machine/name/' + machine)
-                .success(function(name) {
-                    if (name.length >0 ) {
-                        $scope.machineName = name[0]['NAME'];   
-                    } else {
-                        $scope.machineName = "Error!"
-                    }
-                });
-        
+
         function machineNow() {
-            
-            $http.get('../../api/machine/actual/'+machine)
-                .success(function(name) {
-                    $scope.ofActual = name[0]['PrOdId'];
-                    $scope.ofOpr = name[0]['OprNum'];
-                    $scope.ofState = name[0]['LastTimeJobType'];
-                    $http.get('../api/of/desc/' + name[0]['PrOdId'])
-                        .success(function(desc) {
-                            $scope.ofDescription = desc[0]['ItemDesc'];
-                        });
-                    $http.get('../api/slit/'+name[0]['PrOdId'])
-                        .success(function(qty) {
-                             if (name[0]['OprNum'] == 10 && 
-                             ($scope.machineName != 'INKMAKER'  && $scope.machineName != 'NOMAN'
-                               && $scope.machineName != 'MAN'
-                             ))
-                                {
-                                        /* If OF is in state 10 or machine id is diferent 
-                                           of INKMAKER we need find out quantity 
-                                           in another table: PrOdBOM
-                                        */
-                                        $http.get('../api/printer/' + name[0]['PrOdId'])
-                                            .success(function(q) {
-                                                $scope.ofQtyPlanned = q[0]['quantity']; 
-                                            })
-                                    } else {
-                                        $scope.ofQtyPlanned = qty[0]['OrderQty'];
-                                    }
-                            $http.get('../api/of/completed/'+name[0]['PrOdId']+'/'+name[0]['OprNum']+'/'  + machine)
-                                .success(function(comp) {
-                                    if (comp.length>0) {
-                                        $scope.ofCompleted = comp[0]['StkQty'];
-                                        $scope.ofCompletedPercent = comp[0]['StkQty']*100/qty[0]['OrderQty'];    
-                                    }
-                                    
-                                })
-                        });
-                })
+            supervisorSrv.machineOne(machine)
+                .success(function(mach) {
+                    $scope.machineInfo = mach;
+                    $scope.machineInfo['ofState'] = machineStateSrv.get(mach.status);  
+                    if (mach.quantityPlanned && mach.quantityPlanned != 0 && mach.ofCompleted) {
+                                $scope.machineInfo['ofCompletedPercent'] = mach.ofCompleted*100/mach.quantityPlanned
+                            }
+                },function(err){
+                        console.log(err);
+                    });
+
         }
         
         machineNow();
         
-        $interval(machineNow,60000);
+        supervisorSrv.machinesAllTimer = $interval(machineNow,5000);
         
     });
