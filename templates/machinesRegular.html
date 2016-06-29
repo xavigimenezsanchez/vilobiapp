@@ -12,12 +12,8 @@
                     <md-card-header-text>
                         <span class="md-headline"><!--strong>Màquina: </strong-->{{machine.name}}</span>
                     </md-card-header-text>
-                    <md-button  class="md-fab md-mini md-primary md-hue-2" ng-click="go(machine.id)"  aria-label="Go">
-                        <md-icon md-svg-src="img/icons/ic_computer_white_18px.svg"></md-icon>
-                    </md-button>
-                    <md-button  class="md-fab md-mini md-primary md-hue-2" ng-click="goBigScreen(machine.id)"  aria-label="Go">
-                        <md-icon md-svg-src="img/icons/ic_visibility_white_18px.svg"></md-icon>
-                    </md-button>
+                        <md-icon md-svg-src="img/icons/ic_computer_black_18px.svg" ng-click="go(machine.id)"  aria-label="normal screen"></md-icon>
+                        <md-icon md-svg-src="img/icons/ic_visibility_black_18px.svg" ng-click="goBigScreen(machine.id)"  aria-label="big screen"></md-icon>
                     </md-card-header>
                     <md-card-title>
                     <md-card-title-text>
@@ -42,7 +38,7 @@
                             <span ><strong>Ordre:</strong></span>
                             <span>&nbsp{{machine.quantityPlanned | number:0}}</span>
                             <span ng-if="machine.ofCompleted"><strong>Complert:</strong></span>
-                            <span>&nbsp{{machine.ofCompleted | number:0 }}</span>
+                            <span ng-if="machine.ofCompleted">&nbsp{{machine.ofCompleted | number:0 }}</span>
                         </div>
                         <div layout= "column" layout-align="space-around center">
                             <span class="md-subhead">{{machine.status}}</span>

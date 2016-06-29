@@ -20,6 +20,16 @@ angular.module('vilobiApp')
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
             $scope.breadcrumbs = toState.name;
             supervisorSrv.killTimers();
+         });
+
+         $rootScope.$on('$routeChangeStart', function() {
+            var state = driverSrv.getState();
+            console.log('HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!')
+            try {
+                $state.go(state.id,{'id':state.param});
+            } catch (error) {
+                $state.go('common.supervisor');
+            }
          })
         
     });

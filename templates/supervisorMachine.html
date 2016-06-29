@@ -18,12 +18,8 @@
           <div class="md-list-item-text" layout="column">
             <h3>{{ machine.WrkCtrId }}</h3>
           </div>
-          <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="Go">
-            <md-icon md-svg-src="img/icons/ic_computer_white_18px.svg" ng-click="go(machine.WrkCtrId)" style="color: greenyellow;"></md-icon>
-          </md-button>
-          <md-button class="md-fab md-mini md-primary md-hue-2" aria-label="Go">
-            <md-icon md-svg-src="img/icons/ic_visibility_white_18px.svg" ng-click="goBigScreen(machine.WrkCtrId)" style="color: greenyellow;"></md-icon>
-          </md-button>
+          <md-icon class="md-secondary md-hue-2" aria-label="big screen" md-svg-src="img/icons/ic_visibility_black_18px.svg" ng-click="goBigScreen(machine.WrkCtrId)" style="color: greenyellow;"></md-icon>
+          <md-icon md-svg-src="img/icons/ic_computer_black_18px.svg" aria-label="normal screen" ng-click="go(machine.WrkCtrId)" style="color: greenyellow;"></md-icon>
           <md-divider ng-if="!$last"></md-divider>
         </md-list-item>
         

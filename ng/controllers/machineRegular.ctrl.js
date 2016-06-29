@@ -2,19 +2,25 @@ angular.module('vilobiApp')
     .controller('machineRegularController', function($scope, $http, $stateParams, $location, $state, $interval, $timeout, $mdSidenav, driverSrv, machineStateSrv,supervisorSrv) {
         var machine = $stateParams.id;
         $scope.machineInfo = {};
+        $scope.sfFirst = [];
         
         $scope.goSupervisor = function() {
             $state.go('common.supervisor');
         }
+
+        $scope.goBigScreen = function(locate) {
+            driverSrv.set($stateParams.id);
+            $scope.$emit('Machine');
+            $state.go('common.machine',{'id':locate});
+        };
         
         $scope.goBack = function() {
-            var state = driverSrv.getState();
-            if (driverSrv.get() && driverSrv.getState()) {
-                $state.go(state,{'id':driverSrv.get()});
-            } else {
+            try {
+                var state = driverSrv.getState();
+                $state.go(state.id,{'id':state.param});
+            } catch (error) {
                 $state.go('common.supervisor');
             }
-            
         }
 
         function machineNow() {
@@ -28,6 +34,13 @@ angular.module('vilobiApp')
                 },function(err){
                         console.log(err);
                     });
+
+             $http.get('../../api/machine/'+machine)
+                .success(function(sf) {
+                    for (var i=0; i<( sf.length <4 ? sf.length:4); i++) {
+                        $scope.sfFirst[i] = sf[i];
+                    }
+                });
 
         }
         

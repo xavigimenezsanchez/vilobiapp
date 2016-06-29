@@ -12,13 +12,11 @@ angular.module('vilobiApp')
         $scope.goBack = function() {
             $scope.$emit('MachineOut');
             var state = driverSrv.getState();
-            console.log(state);
-            if (driverSrv.get()) {
-                $state.go(state,{'id':driverSrv.get()});
-            } else {
+            try {
+                $state.go(state.id,{'id':state.param});
+            } catch (error) {
                 $state.go('common.supervisor');
             }
-            
         }
         
         $http.get('../../api/machine/'+url[url.length -1])
@@ -59,7 +57,12 @@ angular.module('vilobiApp')
                                         */
                                         $http.get('../api/printer/' + name[0]['PrOdId'])
                                             .success(function(q) {
-                                                $scope.ofQtyPlanned = q[0]['quantity']; 
+                                                if (q[0]) {
+                                                    $scope.ofQtyPlanned = q[0]['quantity'];
+                                                } else {
+                                                    $scope.ofQtyPlanned = 0;
+                                                }
+                                                 
                                             })
                                     } else {
                                         $scope.ofQtyPlanned = qty[0]['OrderQty'];

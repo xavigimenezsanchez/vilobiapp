@@ -9,8 +9,8 @@ angular.module('vilobiApp')
         this.get = function() {
             return this.lastId;
         }
-        this.setState = function(last) {
-            this.lastState.push(last);
+        this.setState = function(last,param) {
+            this.lastState.push({'id':last,'param':param});
         }
         this.getState = function() {
             return this.lastState.pop();

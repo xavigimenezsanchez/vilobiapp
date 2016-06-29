@@ -23,14 +23,12 @@ angular.module('vilobiApp')
 
 
         $scope.go = function(locate) {
-                driverSrv.setState($state.current.name);
-                driverSrv.set($stateParams.id);
+                driverSrv.setState($state.current.name,$stateParams.id);
                 $state.go('common.machineRegular',{'id':locate});
             };
             
         $scope.goBigScreen = function(locate) {
-                driverSrv.setState($state.current.name);
-                driverSrv.set($stateParams.id);
+                driverSrv.setState($state.current.name,$stateParams.id);
                 $scope.$emit('Machine');
                 $state.go('common.machine',{'id':locate});
             };
