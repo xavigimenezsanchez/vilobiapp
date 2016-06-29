@@ -24,7 +24,7 @@ angular.module('vilobiApp')
                 for (var i=0; i<( sf.length <5 ? sf.length:5); i++) {
                     $scope.sfFirst[i] = sf[i];
                 }
-            })
+            });
         
         
         function machineNow() {
