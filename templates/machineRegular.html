@@ -1,73 +1,71 @@
-<div layout-padding flex="50">
-    <md-card  md-theme-watch="true" flex-offset-gt-sm="25" flex-gt-md="50" class = "md-whiteframe-6dp" md-theme="{{machineInfo.ofState.theme}}">
-        <md-card-header>
-          <md-card-avatar>
-            <md-icon md-svg-src="img/icons/{{machineInfo.ofState.icon}}"></md-icon>
-          </md-card-avatar>
-          <md-card-header-text>
-              <span class="md-headline"><!--strong>Màquina: </strong-->{{machineInfo.name}}</span>
-              <span class="md-headline"><!--strong>Màquina: </strong-->{{machineInfo.custName}}</span>              
-          </md-card-header-text>
-
-            <md-icon md-svg-src="img/icons/ic_backspace_black_18px.svg" aria-label="normal screen" ng-click="goBack()" style="color: greenyellow;"></md-icon>
-              <md-icon md-svg-src="img/icons/ic_visibility_black_18px.svg" ng-click="goBigScreen(machineInfo.id)"  aria-label="Go"></md-icon>
-
-          </md-card-header>
-          <md-card-title>
-          <md-card-title-text>
-              <!--span class="md-headline"><strong>OF:</strong>{{machine.ofActual}}</span-->
-              <span><strong>{{machineInfo.of}}/{{machineInfo.ufd}}</strong></span>
-              <!--div><strong>Descripció:</strong></div-->
-              <span class="md-subhead">&nbsp&nbsp{{machineInfo.desc}}</span>
-          </md-card-title-text>
-          </md-card-title>
-          <md-card-content>
-          <div layout-xs="column" layout="row"  layout-align="space-around">
-              <!--md-progress-circular md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-circular-->
-              <div layout= "column" layout-align="space-around" ng-if="machineInfo.ofCompletedPercent">
-                  <h3 >{{machineInfo.ofCompletedPercent  | number:2}}%</h3>
-                  <div>
-                      <md-progress-linear md-mode="determinate" value="{{machineInfo.ofCompletedPercent}}"></md-progress-linear>
-                      <md-progress-linear md-mode="determinate" value="{{machineInfo.ofCompletedPercent}}"></md-progress-linear>
-                  </div>
-              </div>
-              <div layout= "column" layout-align="space-around">
-              
-                  <span ><strong>Ordre:</strong></span>
-                  <span>&nbsp{{machineInfo.quantityPlanned | number:0}}</span>
-                  <span ng-if="machineInfo.ofCompleted"><strong>Complert:</strong></span>
-                  <span>&nbsp{{machineInfo.ofCompleted | number:0 }}</span>
-              </div>
-              <div layout= "column" layout-align="space-around center">
-                  <span class="md-subhead">{{machineInfo.status}}</span>
-              </div>
-          </div>
-          </md-card-content>
-      </md-card>
-
-</div>
-
-
-<div layout-padding flex="grow" layout="row" style="overflow:auto;">
-    <md-card ng-repeat="sf in sfFirst" flex-gt-md="35">
+<md-content layout-padding flex="grow" layout="column">
+    <div layout-padding flex="50">
+        <md-card  md-theme-watch="true" flex-offset-gt-sm="25" flex-gt-md="50" class = "md-whiteframe-6dp" md-theme="{{machineInfo.ofState.theme}}">
             <md-card-header>
-
+            <md-card-avatar>
+                <md-icon md-svg-src="img/icons/{{machineInfo.ofState.icon}}"></md-icon>
+            </md-card-avatar>
             <md-card-header-text>
-                <span class="md-title">Angular</span>
-                <span class="md-subhead">Material</span>
+                <span class="md-headline"><!--strong>Màquina: </strong-->{{machineInfo.name}}</span>
+                <span class="md-headline"><!--strong>Màquina: </strong-->{{machineInfo.custName}}</span>              
             </md-card-header-text>
+
+                <md-icon md-svg-src="img/icons/ic_backspace_black_18px.svg" aria-label="normal screen" ng-click="goBack()" style="color: greenyellow;"></md-icon>
+                <md-icon md-svg-src="img/icons/ic_visibility_black_18px.svg" ng-click="goBigScreen(machineInfo.id)"  aria-label="Go"></md-icon>
+
             </md-card-header>
             <md-card-title>
             <md-card-title-text>
-                <span class="md-headline">Card header</span>
+                <!--span class="md-headline"><strong>OF:</strong>{{machine.ofActual}}</span-->
+                <span><strong>{{machineInfo.of}}/{{machineInfo.ufd}}</strong></span>
+                <!--div><strong>Descripció:</strong></div-->
+                <span class="md-subhead">&nbsp&nbsp{{machineInfo.desc}}</span>
             </md-card-title-text>
             </md-card-title>
             <md-card-content>
-            <p>
-                The titles of Washed Out's breakthrough song and the first single from Paracosm share the
-                two most important words in Ernest Greene's musical language: feel it. It's a simple request, as well...
-            </p>
+            <div layout-xs="column" layout="row"  layout-align="space-around">
+                <!--md-progress-circular md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-circular-->
+                <div layout= "column" layout-align="space-around" ng-if="machineInfo.ofCompletedPercent">
+                    <h3 >{{machineInfo.ofCompletedPercent  | number:2}}%</h3>
+                    <div>
+                        <md-progress-linear md-mode="determinate" value="{{machineInfo.ofCompletedPercent}}"></md-progress-linear>
+                        <md-progress-linear md-mode="determinate" value="{{machineInfo.ofCompletedPercent}}"></md-progress-linear>
+                    </div>
+                </div>
+                <div layout= "column" layout-align="space-around">
+                
+                    <span ><strong>Ordre:</strong></span>
+                    <span>&nbsp{{machineInfo.quantityPlanned | number:0}}</span>
+                    <span ng-if="machineInfo.ofCompleted"><strong>Complert:</strong></span>
+                    <span>&nbsp{{machineInfo.ofCompleted | number:0 }}</span>
+                </div>
+                <div layout= "column" layout-align="space-around center">
+                    <span class="md-subhead">{{machineInfo.status}}</span>
+                </div>
+            </div>
             </md-card-content>
         </md-card>
 
-</div>
+    </div>
+    <br/>
+     <md-divider></md-divider>
+     <h2>Següents</h2>
+    <div ng-repeat="sf in sfFirst" class="md-whiteframe-3dp" >
+        <div layout="row" layout-align="space-around center">
+            <span flex="50"><strong>OF:</strong>&nbsp; {{sf.OF}}</span>
+            <span flex="50"><strong>Descripció:</strong>&nbsp; {{sf.DESCRIPTION}}</span>
+        </div>
+        <div layout="row" layout-align="center center">
+            <span flex="50"><strong>Setup:</strong>&nbsp;{{sf.DATASETUP  | date:'dd-MM-yyyy'}}&nbsp;{{sf.SETUP}}</span>
+            <span flex="50"><strong>Start:</strong>&nbsp;{{sf.DATASTART  | date:'dd-MM-yyyy'}}&nbsp;{{sf.START}}</span>
+        </div>
+            
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+        
+
+</md-content>

@@ -37,7 +37,7 @@ angular.module('vilobiApp')
 
              $http.get('../../api/machine/'+machine)
                 .success(function(sf) {
-                    for (var i=0; i<( sf.length <4 ? sf.length:4); i++) {
+                    for (var i=0; i<( sf.length <10 ? sf.length:10); i++) {
                         $scope.sfFirst[i] = sf[i];
                     }
                 });

@@ -13,9 +13,9 @@
     </md-content>
 </md-sidenav>
 
-<div layout="column" flex role="main" >
+<div layout="column" flex="grow" role="main" >
     
-    <div layout="column">
+    <div layout="column" flex="grow">
         <md-toolbar ng-if="!machine" md-theme="breadcrumbs" class="md-whiteframe-6dp">
             <div class="md-toolbar-tools">
                 <md-button class="md-icon-button"
@@ -35,7 +35,7 @@
         </md-toolbar>
         
            
-            <div flex layout="column"  layout-fill ui-view style="overflow:auto;"></div>
+            <div flex="grow" layout="column"  layout-fill ui-view style="overflow:auto;"></div>
            
 
     </div>
