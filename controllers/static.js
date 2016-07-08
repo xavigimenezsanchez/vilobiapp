@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var options = {
-    root: __dirname + "../../layouts"
+    root: __dirname + "/../layouts"
 };
 
 router.use(express.static(__dirname + "/../assets"));
