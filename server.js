@@ -10,6 +10,7 @@ app.use("/api/of", require("./controllers/api/of"));
 app.use("/api/slit", require('./controllers/api/slit'));
 app.use("/api/printer", require('./controllers/api/printer'));
 app.use("/api/supervisor", require('./controllers/api/supervisor'));
+app.use("/api/bom", require('./controllers/api/bom'));
 
 app.use("/",require("./controllers/static"));
 /*app.use("/machine/:id",require("./controllers/machine"));*/
