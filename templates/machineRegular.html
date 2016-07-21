@@ -59,6 +59,10 @@
             <span flex="50"><strong>Setup:</strong>&nbsp;{{sf.DATASETUP  | date:'dd-MM-yyyy'}}&nbsp;{{sf.SETUP}}</span>
             <span flex="50"><strong>Start:</strong>&nbsp;{{sf.DATASTART  | date:'dd-MM-yyyy'}}&nbsp;{{sf.START}}</span>
         </div>
+        <div layout="row" layout-align="center center">
+            <span flex ng-repeat="ava in sf.avaliable"> {{ava.itemId}} : {{ava.avaliable}} </span>
+        </div>
+
             
     </div>
     <br/>
