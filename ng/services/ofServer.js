@@ -11,6 +11,15 @@ angular.module('vilobiApp')
                         var auxAvaliable= [];
                         if (bom.length == 0 ) deferred.resolve([{'Avalaible':2,'itemId':''}])
                         bom.forEach(function(element){
+                            /** 
+                             * According to "RequiredQty" and "Avalaible" relation
+                             * set up the flag:
+                             *          2.- green flag
+                             *          1.- orange flag
+                             *          0.- red flag
+                             * */  
+
+
                             var auxBom = {'itemId' : element['ItemId'], 'avaliable' : 0};
                             if (element['RequiredQty'] <= element['Avalaible']) {
                                 auxBom['avaliable'] =  2;  // Semafor verd

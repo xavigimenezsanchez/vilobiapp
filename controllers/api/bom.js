@@ -2,7 +2,6 @@ var router = require("express").Router();
 var db = require("../../db");
 
 router.get('/:of', function(req, res, next) {
-    console.log('********************************************');
     var aux = []; // Auxiliar array for store information
     new db.shopFloor.Request().query('SELECT ItemId, Width, WidthUnit, RequiredQty FROM CSF_ENP_TOR.dbo.PrOdBOM WHERE        (PrOdId = \'' + req.params.of + '\') AND (ItemType = \'Substrates\') AND (OprNum = 10) AND (RequiredQty > 0) AND (SFBOMRevision = 0)')
                 .then(function(material) {

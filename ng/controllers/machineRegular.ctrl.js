@@ -40,14 +40,28 @@ angular.module('vilobiApp')
                 .success(function(sf) {
                     var aux = sf;
                     var auxsfFirst = []
+                    /*
                     for (var i=0; i<( sf.length <10 ? sf.length:10); i++) {
                         //aux[i]['avaliable'] = 0;
                         auxsfFirst[i] = aux[i];
                     }
+                    */
+                    
+                    var contSF = 0;
+                    var cont =0
+                    while (cont < 20 && contSF < sf.length ) {
+                        if (new Date(aux[contSF]['DATASTART']) > Date.now()) {
+                            auxsfFirst[cont++] = aux[contSF++];
+                        } else {
+                            contSF++;
+                        }
+                        console.log (contSF);
+                        console.log(cont);
+                    }
+
+
                     ofSrv.materialAvaliable(auxsfFirst)
                         .then(function(dd) {
-                            console.log('Estic aquíiiiiii');
-                             console.log(dd);
                             $scope.sfFirst = dd;
                         });
 
