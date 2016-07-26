@@ -29,7 +29,7 @@ angular.module('vilobiApp')
                 }
             });
         */
-        function machineNow() {
+        function machineNow2() {
             supervisorSrv.machineOne(machine)
                 .success(function(mach) {
                     $scope.machineInfo = mach;
@@ -67,36 +67,31 @@ angular.module('vilobiApp')
                     $scope.sfFirst = auxsfFirst;
 
                     ofSrv.materialAvaliable(auxsfFirst)
-                        .then(function(dd) {
-                            dd.forEach(function(ele) {
+                        .then(function(dd2) {
+                            dd2.forEach(function(ele) {
                                 if (ele.avaliable) {
                                         ele.avaliable.forEach(function(element, index, array) {
                                                 switch (element.avaliable) {
                                                     case 0 :
-                                                        array[index]['semaphor'] = 'end';
+                                                        array[index]['semaphor'] = 'semaphorRed';
                                                         break;
                                                     case 1 :
-                                                        array[index]['semaphor'] = 'ncdown';
+                                                        array[index]['semaphor'] = 'semaphorOrange';
                                                         break;
                                                     case 2 :
-                                                        array[index]['semaphor'] = 'process';
+                                                        array[index]['semaphor'] = 'semaphorGreen';
                                                         break;
                                                 }
                                         });
                                 }
                             });
-                            $scope.sfFirst = dd;
+                            $scope.sfFirst = dd2;
                         }); 
-
-
                 });
 
         }
- 
-        
-        machineNow();
-        
-        $interval(machineNow,60000);
+        machineNow2();  
+        $interval(machineNow2,100000);
         
     });
 

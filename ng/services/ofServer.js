@@ -1,10 +1,11 @@
 angular.module('vilobiApp')
     .service('ofSrv', function($http, $q) {
         var urlBase = '../../api/bom/';
-        var deferred = $q.defer();
+        var deferred; // this variable will be the promise
      
         this.materialAvaliable = function(ofs) {
             var auxCount = 1;
+            deferred = $q.defer();
             ofs.forEach(function(element, index, array) {
                 $http.get(urlBase + element.OF)
                     .success(function(bom) {
@@ -28,11 +29,11 @@ angular.module('vilobiApp')
                             auxAvaliable.push(auxBom);
                         });
                         array[index]['avaliable'] = auxAvaliable;
-                        if (++auxCount == array.length) {
+                        if (++auxCount > array.length) {
                             deferred.resolve(array);
                             
                         }
-                    })
+                    });
                 
             });
             return deferred.promise;

@@ -68,18 +68,19 @@ angular.module('vilobiApp')
                                         ele.avaliable.forEach(function(element, index, array) {
                                                 switch (element.avaliable) {
                                                     case 0 :
-                                                        array[index]['semaphor'] = 'end';
+                                                        array[index]['semaphor'] = 'semaphorRed';
                                                         break;
                                                     case 1 :
-                                                        array[index]['semaphor'] = 'ncdown';
+                                                        array[index]['semaphor'] = 'semaphorOrange';
                                                         break;
                                                     case 2 :
-                                                        array[index]['semaphor'] = 'process';
+                                                        array[index]['semaphor'] = 'semaphorGreen';
                                                         break;
                                                 }
                                         });
                                 }
                             });
+                            
                             $scope.sfFirst = dd;
                         }); 
 

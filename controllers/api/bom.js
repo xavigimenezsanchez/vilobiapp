@@ -11,8 +11,10 @@ router.get('/:of', function(req, res, next) {
                     material.forEach(function(item, index, arr) {
                         aux[index] = item;
                         console.log(item);
-                        new db.shopFloor.Request().query('SELECT Sum(INVENTSUM.AVAILPHYSICAL) AS \'Avalaible\' FROM ENP_ES_AX_PRD.dbo.INVENTDIM INVENTDIM, ENP_ES_AX_PRD.dbo.INVENTSUM INVENTSUM WHERE INVENTSUM.DATAAREAID = INVENTDIM.DATAAREAID AND INVENTSUM.INVENTDIMID = INVENTDIM.INVENTDIMID AND ((INVENTDIM.CONFIGID='+ item['Width'] +') AND (INVENTSUM.ITEMID=\''+ item['ItemId'] + '\') AND (INVENTSUM.AVAILPHYSICAL>0) AND (INVENTDIM.WMSLOCATIONID=(SELECT AFCQUEUEBEFORE FROM WrkCtrTable WHERE WrkCtrId =(select WRKCTRID from PrOdRouteJob where PRODID = \'' + req.params.of +'\' and OPRNUM = 10 AND JOBTYPE = 2 GROUP BY WRKCTRID))))')
+                        
+                        new db.shopFloor.Request().query('SELECT Sum(INVENTSUM.AVAILPHYSICAL) AS \'Avalaible\' FROM ENP_ES_AX_PRD.dbo.INVENTDIM INVENTDIM, ENP_ES_AX_PRD.dbo.INVENTSUM INVENTSUM WHERE INVENTSUM.DATAAREAID = INVENTDIM.DATAAREAID AND INVENTSUM.INVENTDIMID = INVENTDIM.INVENTDIMID AND ((INVENTDIM.CONFIGID=\''+ item['Width'] +'\') AND (INVENTSUM.ITEMID=\''+ item['ItemId'] + '\') AND (INVENTSUM.AVAILPHYSICAL>0) AND (INVENTDIM.WMSLOCATIONID=(SELECT AFCQUEUEBEFORE FROM WrkCtrTable WHERE WrkCtrId =(select WRKCTRID from PrOdRouteJob where PRODID = \'' + req.params.of +'\' and OPRNUM = 10 AND JOBTYPE = 2 GROUP BY WRKCTRID))))')
                             .then(function(avalaible) {
+                                console.log('EEEEEEEEEEEEEEEEEEOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO');
                                 aux[index]['Avalaible'] = avalaible[0]['Avalaible']==null ? 0:avalaible[0]['Avalaible'];
                                 if (++cont == arr.length) res.json(aux);
                             })

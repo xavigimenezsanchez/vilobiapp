@@ -75,7 +75,26 @@ angular.module('vilobiApp')
             .backgroundPalette('deep-orange');
         $mdThemingProvider.theme('error')
             .backgroundPalette('grey');
-        
+        /* Semaphor theming */
+        $mdThemingProvider.theme('semaphorRed')
+            .primaryPalette('red')
+            .backgroundPalette('red',{
+                'default' : '100'
+            })
+            .dark();
+        $mdThemingProvider.theme('semaphorOrange')
+            .primaryPalette('orange')
+            .backgroundPalette('orange',{
+                'default' : '100'
+            })
+            .dark();
+        $mdThemingProvider.theme('semaphorGreen')
+            .primaryPalette('green')
+            .backgroundPalette('green',{
+                'default' : '100'
+            })
+            .dark();
+
         $mdThemingProvider.alwaysWatchTheme(true);
         });
        
