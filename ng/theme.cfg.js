@@ -75,5 +75,7 @@ angular.module('vilobiApp')
             .backgroundPalette('deep-orange');
         $mdThemingProvider.theme('error')
             .backgroundPalette('grey');
+        
+        $mdThemingProvider.alwaysWatchTheme(true);
         });
        

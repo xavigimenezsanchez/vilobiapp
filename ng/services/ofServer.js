@@ -9,7 +9,7 @@ angular.module('vilobiApp')
                 $http.get(urlBase + element.OF)
                     .success(function(bom) {
                         var auxAvaliable= [];
-                        if (bom.length == 0 ) deferred.resolve([{'Avalaible':2,'itemId':''}])
+                        if (bom.length == 0 ) auxAvaliable.push({'itemId':'No hi ha', 'avaliable':3});
                         bom.forEach(function(element){
                             /** 
                              * According to "RequiredQty" and "Avalaible" relation
@@ -18,8 +18,6 @@ angular.module('vilobiApp')
                              *          1.- orange flag
                              *          0.- red flag
                              * */  
-
-
                             var auxBom = {'itemId' : element['ItemId'], 'avaliable' : 0};
                             if (element['RequiredQty'] <= element['Avalaible']) {
                                 auxBom['avaliable'] =  2;  // Semafor verd

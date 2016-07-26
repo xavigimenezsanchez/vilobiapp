@@ -38,6 +38,18 @@ p {
     width: 100%;
   }
 
+
+/* custom Semafors m-chips */
+
+semafor0 {
+  background-color: red important!;
+}
+m-chip.semafor1 {
+  background-color: orange;
+}
+m-chip.semafor2 {
+  background-color: green;
+}
 @media only screen and (max-width : 992px) {
   .parallax-container .section {
     position: absolute;

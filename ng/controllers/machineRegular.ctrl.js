@@ -45,6 +45,7 @@ angular.module('vilobiApp')
                         //aux[i]['avaliable'] = 0;
                         auxsfFirst[i] = aux[i];
                     }
+                    $scope.sfFirst = auxsfFirst;
                     */
                     
                     var contSF = 0;
@@ -55,15 +56,32 @@ angular.module('vilobiApp')
                         } else {
                             contSF++;
                         }
-                        console.log (contSF);
-                        console.log(cont);
+                        
                     }
 
+                    $scope.sfFirst = auxsfFirst;
 
                     ofSrv.materialAvaliable(auxsfFirst)
                         .then(function(dd) {
+                            dd.forEach(function(ele) {
+                                if (ele.avaliable) {
+                                        ele.avaliable.forEach(function(element, index, array) {
+                                                switch (element.avaliable) {
+                                                    case 0 :
+                                                        array[index]['semaphor'] = 'end';
+                                                        break;
+                                                    case 1 :
+                                                        array[index]['semaphor'] = 'ncdown';
+                                                        break;
+                                                    case 2 :
+                                                        array[index]['semaphor'] = 'process';
+                                                        break;
+                                                }
+                                        });
+                                }
+                            });
                             $scope.sfFirst = dd;
-                        });
+                        }); 
 
 
                 });
