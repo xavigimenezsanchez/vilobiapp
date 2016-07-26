@@ -1,7 +1,9 @@
 angular.module('vilobiApp')
-    .controller('bitScreenController', function($scope, $http, driverSrv, $location, $state, $interval, $timeout, $mdSidenav) {
+    .controller('bitScreenController', function($scope, $http, $stateParams, ofSrv , machineStateSrv ,driverSrv, $location, $state, $interval, $timeout, $mdSidenav, supervisorSrv ) {
         var url = $location.absUrl().split('/');
+        var machine = $stateParams.id;
         $scope.$emit('Machine');
+        $scope.machineInfo = {};
         $scope.sfFirst =[];
         
         $scope.goSupervisor = function() {
@@ -19,15 +21,89 @@ angular.module('vilobiApp')
             }
         }
         
+        /*
         $http.get('../../api/machine/'+url[url.length -1])
             .success(function(sf) {
                 for (var i=0; i<( sf.length <5 ? sf.length:5); i++) {
                     $scope.sfFirst[i] = sf[i];
                 }
             });
-        
-        
+        */
         function machineNow() {
+            supervisorSrv.machineOne(machine)
+                .success(function(mach) {
+                    $scope.machineInfo = mach;
+                    $scope.machineInfo['ofState'] = machineStateSrv.get(mach.status);  
+                    if (mach.quantityPlanned && mach.quantityPlanned != 0 && mach.ofCompleted) {
+                                $scope.machineInfo['ofCompletedPercent'] = mach.ofCompleted*100/mach.quantityPlanned
+                            }
+                },function(err){
+                        console.log(err);
+                    });
+
+             $http.get('../../api/machine/'+machine)
+                .success(function(sf) {
+                    var aux = sf;
+                    var auxsfFirst = []
+                    /*
+                    for (var i=0; i<( sf.length <10 ? sf.length:10); i++) {
+                        //aux[i]['avaliable'] = 0;
+                        auxsfFirst[i] = aux[i];
+                    }
+                    $scope.sfFirst = auxsfFirst;
+                    */
+                    
+                    var contSF = 0;
+                    var cont =0
+                    while (cont < 6 && contSF < sf.length ) {
+                        if (new Date(aux[contSF]['DATASTART']) > Date.now()) {
+                            auxsfFirst[cont++] = aux[contSF++];
+                        } else {
+                            contSF++;
+                        }
+                        
+                    }
+
+                    $scope.sfFirst = auxsfFirst;
+
+                    ofSrv.materialAvaliable(auxsfFirst)
+                        .then(function(dd) {
+                            dd.forEach(function(ele) {
+                                if (ele.avaliable) {
+                                        ele.avaliable.forEach(function(element, index, array) {
+                                                switch (element.avaliable) {
+                                                    case 0 :
+                                                        array[index]['semaphor'] = 'end';
+                                                        break;
+                                                    case 1 :
+                                                        array[index]['semaphor'] = 'ncdown';
+                                                        break;
+                                                    case 2 :
+                                                        array[index]['semaphor'] = 'process';
+                                                        break;
+                                                }
+                                        });
+                                }
+                            });
+                            $scope.sfFirst = dd;
+                        }); 
+
+
+                });
+
+        }
+ 
+        
+        machineNow();
+        
+        $interval(machineNow,60000);
+        
+    });
+
+
+
+/*
+       function machineNow() {
             $http.get('../../api/machine/name/' + url[url.length -1 ])
                 .success(function(name) {
                     if (name.length >0 ) {
@@ -55,7 +131,7 @@ angular.module('vilobiApp')
                                            of INKMAKER we need find out quantity 
                                            in another table: PrOdBOM
                                         */
-                                        $http.get('../api/printer/' + name[0]['PrOdId'])
+          /*                              $http.get('../api/printer/' + name[0]['PrOdId'])
                                             .success(function(q) {
                                                 if (q[0]) {
                                                     $scope.ofQtyPlanned = q[0]['quantity'];
@@ -78,9 +154,5 @@ angular.module('vilobiApp')
                         });
                 })
         }
-        
-        machineNow();
-        
-        $interval(machineNow,60000);
-        
-    });
+
+        */

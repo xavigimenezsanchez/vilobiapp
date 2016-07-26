@@ -3,7 +3,7 @@
      <md-button flex="5" class=" " ng-click="goBack()" >
                         <md-icon class="md-avatar-icon" md-svg-icon="img/icons/ic_reply_white_18px.svg"></md-icon>    
                     </md-button>
-    <h1 flex="60">{{machineName}} </h1>
+    <h1 flex="60">{{machineInfo.name}} </h1>
     <h1 flex sf-clock='M/d/yy h:mm:ss a'></h1>
 </div>
 
@@ -19,38 +19,38 @@
     <div layout="row" id="dataNowOF" layout-align="space-around center">
         <div flex="1"></div>
         <div flex="20">
-            <h1>{{ofActual}}</h1>
+            <h1>{{machineInfo.of}}</h1>
         </div>
         <div flex="25">
-            <h1>{{ofDescription}}</h1>
+            <h1>{{machineInfo.desc}}</h1>
         </div>
         <div flex="25" >
             
             <div layout="row" layout-align="space-between stretch">
                 <div flex="2"></div>
                 <div layout="column">
-                    <h2>Ordre: {{ofQtyPlanned}}</h2>
-                    <h2>Complert: {{ofCompleted}}</h2>    
+                    <h2>Ordre: {{machineInfo.quantityPlanned}}</h2>
+                    <h2>Complert: {{machineInfo.ofCompleted}}</h2>    
                 </div>
                 <div layout="column"  layout-align="center stretch">
-                     <h1>{{ofCompletedPercent | number:2}}%</h1>
+                     <h1>{{machineInfo.ofCompletedPercent | number:2}}%</h1>
                      <!--md-progress-circular md-mode="determinate" value="{{ofCompletedPercent}}">55</md-progress-circular-->
                 </div>
                 <div flex="2"></div>
             </div>
             
-            <md-progress-linear md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-linear>
-            <md-progress-linear md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-linear>
-            <md-progress-linear md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-linear>
-            <md-progress-linear md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-linear>
-            <md-progress-linear md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-linear>
-            <md-progress-linear md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-linear>
-            <md-progress-linear md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-linear>
-            <md-progress-linear md-mode="determinate" value="{{ofCompletedPercent}}"></md-progress-linear>
+            <md-progress-linear md-mode="determinate" value="{{machineInfo.ofCompletedPercent}}"></md-progress-linear>
+            <md-progress-linear md-mode="determinate" value="{{machineInfo.ofCompletedPercent}}"></md-progress-linear>
+            <md-progress-linear md-mode="determinate" value="{{machineInfo.ofCompletedPercent}}"></md-progress-linear>
+            <md-progress-linear md-mode="determinate" value="{{machineInfo.ofCompletedPercent}}"></md-progress-linear>
+            <md-progress-linear md-mode="determinate" value="{{machineInfo.ofCompletedPercent}}"></md-progress-linear>
+            <md-progress-linear md-mode="determinate" value="{{machineInfo.ofCompletedPercent}}"></md-progress-linear>
+            <md-progress-linear md-mode="determinate" value="{{machineInfo.ofCompletedPercent}}"></md-progress-linear>
+            <md-progress-linear md-mode="determinate" value="{{machineInfo.ofCompletedPercent}}"></md-progress-linear>
         </div>
         <div flex="9"></div>
         <div flex="20">
-            <h1>{{ofState}}</h1>
+            <h1>{{machineInfo.ofState.name}}</h1>
         </div>
     </div>
     
@@ -63,17 +63,16 @@
         <h1 flex="30">DESCRIPCIÓ</h1>    
         <h1 flex="20">SETUP</h1>  
         <h1 flex="20">START</h1>    
-        <h1 flex="18">SEMÀFOR</h1>
+        <h1 flex="18">MATERIAL</h1>
     </div>
     <div layout="row" class="dataNextOF"  layout-align="space-around center" ng-repeat='line in sfFirst'>
-        <div flex="1"></div>
+        <div flex="2"></div>
         <h1 flex="10">{{line.OF}}</h1>
         <h1 flex="30">{{line.DESCRIPTION}}</h1>
         <h1 flex="20">{{line.DATASETUP | date:'dd-MM-yyyy HH:mm'}}</h1>
         <h1 flex="20">{{line.DATASTART | date:'dd-MM-yyyy HH:mm'}}</h1>
         <h1 flex="18">
-            <md-button class="md-fab md-mini md-primary" aria-label="Use Android"></md-button>
-            <md-button class="md-fab md-mini md-primary" aria-label="Use Android"></md-button>
+            <md-button   md-theme="{{ava.semaphor}}" class="md-raised" ng-repeat="ava in line.avaliable" aria-label="material">{{ava.itemId}}</md-button>
             
         </h1>
         
