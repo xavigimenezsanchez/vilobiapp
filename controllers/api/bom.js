@@ -18,10 +18,8 @@ router.get('/:machine/:of', function(req, res, next) {
                             })
      
                     }); 
-                    
                 }).catch(function(err) {
                     console.log(err);
                 });
-    
 });
 module.exports = router;

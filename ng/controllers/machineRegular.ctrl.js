@@ -51,8 +51,10 @@ angular.module('vilobiApp')
                     
                     var contSF = 0;
                     var cont =0
+                    var start = false
                     while (cont < 20 && contSF < sf.length ) {
-                        if (new Date(aux[contSF]['DATASTART']) > Date.now() && $scope.machineInfo.of != aux[contSF]['OF']) {
+                        if ($scope.machineInfo.of == aux[contSF]['OF']) start = true;
+                        if (new Date(aux[contSF]['DATASTART']) > Date.now() && $scope.machineInfo.of != aux[contSF]['OF'] && start) {
                             auxsfFirst[cont++] = aux[contSF++];
                         } else {
                             contSF++;
