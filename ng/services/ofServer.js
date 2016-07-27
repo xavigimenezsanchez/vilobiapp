@@ -3,11 +3,11 @@ angular.module('vilobiApp')
         var urlBase = '../../api/bom/';
         var deferred; // this variable will be the promise
      
-        this.materialAvaliable = function(ofs) {
+        this.materialAvaliable = function(machine, ofs) {
             var auxCount = 1;
             deferred = $q.defer();
             ofs.forEach(function(element, index, array) {
-                $http.get(urlBase + element.OF)
+                $http.get(urlBase + machine + '/' + element.OF)
                     .success(function(bom) {
                         var auxAvaliable= [];
                         if (bom.length == 0 ) auxAvaliable.push({'itemId':'No hi ha', 'avaliable':3});

@@ -52,7 +52,7 @@ angular.module('vilobiApp')
                     var contSF = 0;
                     var cont =0
                     while (cont < 20 && contSF < sf.length ) {
-                        if (new Date(aux[contSF]['DATASTART']) > Date.now()) {
+                        if (new Date(aux[contSF]['DATASTART']) > Date.now() && $scope.machineInfo.of != aux[contSF]['OF']) {
                             auxsfFirst[cont++] = aux[contSF++];
                         } else {
                             contSF++;
@@ -62,7 +62,7 @@ angular.module('vilobiApp')
 
                     $scope.sfFirst = auxsfFirst;
 
-                    ofSrv.materialAvaliable(auxsfFirst)
+                    ofSrv.materialAvaliable($scope.machineInfo.id,auxsfFirst)
                         .then(function(dd) {
                             dd.forEach(function(ele) {
                                 if (ele.avaliable) {
