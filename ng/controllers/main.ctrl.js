@@ -16,6 +16,14 @@ angular.module('vilobiApp')
             $scope.showMenu = true;
             $scope.bckgrndTheme = 'default'
         });
+
+        $scope.$on('WorkingOn', function() {
+            $scope.working = true;
+        });
+
+        $scope.$on('WorkingOff', function() {
+            $scope.working = false;
+        });
         
         $rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
             $scope.breadcrumbs = toState.name;

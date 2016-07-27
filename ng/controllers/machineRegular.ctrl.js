@@ -25,6 +25,7 @@ angular.module('vilobiApp')
         }
 
         function machineNow() {
+            $scope.$emit('WorkingOn');
             supervisorSrv.machineOne(machine)
                 .success(function(mach) {
                     $scope.machineInfo = mach;
@@ -82,6 +83,7 @@ angular.module('vilobiApp')
                             });
                             
                             $scope.sfFirst = dd;
+                            $scope.$emit('WorkingOff');
                         }); 
 
 
