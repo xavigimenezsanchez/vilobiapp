@@ -33,63 +33,57 @@ angular.module('vilobiApp')
                     if (mach.quantityPlanned && mach.quantityPlanned != 0 && mach.ofCompleted) {
                                 $scope.machineInfo['ofCompletedPercent'] = mach.ofCompleted*100/mach.quantityPlanned
                             }
+                    getNextOF();
                 },function(err){
                         console.log(err);
                     });
-
-             $http.get('../../api/machine/'+machine)
-                .success(function(sf) {
-                    var aux = sf;
-                    var auxsfFirst = []
-                    /*
-                    for (var i=0; i<( sf.length <10 ? sf.length:10); i++) {
-                        //aux[i]['avaliable'] = 0;
-                        auxsfFirst[i] = aux[i];
-                    }
-                    $scope.sfFirst = auxsfFirst;
-                    */
-                    
-                    var contSF = 0;
-                    var cont =0
-                    var start = false
-                    while (cont < 20 && contSF < sf.length ) {
-                        if ($scope.machineInfo.of == aux[contSF]['OF']) start = true;
-                        if (new Date(aux[contSF]['DATASTART']) > Date.now() && $scope.machineInfo.of != aux[contSF]['OF'] && start) {
-                            auxsfFirst[cont++] = aux[contSF++];
-                        } else {
-                            contSF++;
-                        }
-                        
-                    }
-
-                    $scope.sfFirst = auxsfFirst;
-
-                    ofSrv.materialAvaliable($scope.machineInfo.id,auxsfFirst)
-                        .then(function(dd) {
-                            dd.forEach(function(ele) {
-                                if (ele.avaliable) {
-                                        ele.avaliable.forEach(function(element, index, array) {
-                                                switch (element.avaliable) {
-                                                    case 0 :
-                                                        array[index]['semaphor'] = 'semaphorRed';
-                                                        break;
-                                                    case 1 :
-                                                        array[index]['semaphor'] = 'semaphorOrange';
-                                                        break;
-                                                    case 2 :
-                                                        array[index]['semaphor'] = 'semaphorGreen';
-                                                        break;
-                                                }
-                                        });
+            function getNextOF() {
+                    $http.get('../../api/machine/'+machine)
+                        .success(function(sf) {
+                            var aux = sf;
+                            var auxsfFirst = []
+                            var contSF = 0;
+                            var cont =0
+                            var start = true; //This Must be false, but for test reason 
+                            while (cont < 15 && contSF < sf.length ) {
+                                if ($scope.machineInfo.of == aux[contSF]['OF']) start = true;  //I have to test, now is unavaliable, is like this not exists, because always is true
+                                if (new Date(aux[contSF]['DATASTART']) > Date.now() && $scope.machineInfo.of != aux[contSF]['OF'] && start) {
+                                    auxsfFirst[cont++] = aux[contSF++];
+                                } else {
+                                    contSF++;
                                 }
-                            });
-                            
-                            $scope.sfFirst = dd;
-                            $scope.$emit('WorkingOff');
-                        }); 
+                                
+                            }
 
+                            $scope.sfFirst = auxsfFirst;
+
+                            ofSrv.materialAvaliable($scope.machineInfo.id,auxsfFirst)
+                                .then(function(dd) {
+                                    dd.forEach(function(ele) {
+                                        if (ele.avaliable) {
+                                                ele.avaliable.forEach(function(element, index, array) {
+                                                        switch (element.avaliable) {
+                                                            case 0 :
+                                                                array[index]['semaphor'] = 'semaphorRed';
+                                                                break;
+                                                            case 1 :
+                                                                array[index]['semaphor'] = 'semaphorOrange';
+                                                                break;
+                                                            case 2 :
+                                                                array[index]['semaphor'] = 'semaphorGreen';
+                                                                break;
+                                                        }
+                                                });
+                                        }
+                                    });
+                                    
+                                    $scope.sfFirst = dd;
+                                    $scope.$emit('WorkingOff');
+                                }); 
+                
 
                 });
+            }
 
         }
         
