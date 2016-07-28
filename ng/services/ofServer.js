@@ -10,7 +10,7 @@ angular.module('vilobiApp')
                 $http.get(urlBase + machine + '/' + element.OF)
                     .success(function(bom) {
                         var auxAvaliable= [];
-                        if (bom.length == 0 ) auxAvaliable.push({'itemId':'No hi ha', 'avaliable':3});
+                        if (bom.length == 0 ) auxAvaliable.push({'itemId':'No n\'hi ha', 'avaliable':3});
                         bom.forEach(function(element){
                             /** 
                              * According to "RequiredQty" and "Avalaible" relation

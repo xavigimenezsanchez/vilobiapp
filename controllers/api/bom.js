@@ -9,6 +9,7 @@ router.get('/:machine/:of', function(req, res, next) {
                     var cont = 0;
                     material.forEach(function(item, index, arr) {
                         aux[index] = item;
+                        console.log('SELECT Sum(INVENTSUM.AVAILPHYSICAL) AS \'Avalaible\' FROM ENP_ES_AX_PRD.dbo.INVENTDIM INVENTDIM, ENP_ES_AX_PRD.dbo.INVENTSUM INVENTSUM WHERE INVENTSUM.DATAAREAID = INVENTDIM.DATAAREAID AND INVENTSUM.INVENTDIMID = INVENTDIM.INVENTDIMID AND ((INVENTDIM.CONFIGID=\''+ item['Width'] +'\') AND (INVENTSUM.ITEMID=\''+ item['ItemId'] + '\') AND (INVENTSUM.AVAILPHYSICAL>0) AND (INVENTDIM.WMSLOCATIONID=(select QUEUEBEFORE from CSF_ENP_TOR.dbo.WrkCtr where WrkCtrId = \'' + req.params.machine +'\')))');
                         new db.shopFloor.Request().query('SELECT Sum(INVENTSUM.AVAILPHYSICAL) AS \'Avalaible\' FROM ENP_ES_AX_PRD.dbo.INVENTDIM INVENTDIM, ENP_ES_AX_PRD.dbo.INVENTSUM INVENTSUM WHERE INVENTSUM.DATAAREAID = INVENTDIM.DATAAREAID AND INVENTSUM.INVENTDIMID = INVENTDIM.INVENTDIMID AND ((INVENTDIM.CONFIGID=\''+ item['Width'] +'\') AND (INVENTSUM.ITEMID=\''+ item['ItemId'] + '\') AND (INVENTSUM.AVAILPHYSICAL>0) AND (INVENTDIM.WMSLOCATIONID=(select QUEUEBEFORE from CSF_ENP_TOR.dbo.WrkCtr where WrkCtrId = \'' + req.params.machine +'\')))')
                             .then(function(avalaible) {
                                 aux[index]['Avalaible'] = avalaible[0]['Avalaible']==null ? 0:avalaible[0]['Avalaible'];
