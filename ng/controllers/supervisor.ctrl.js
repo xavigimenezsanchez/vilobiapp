@@ -8,7 +8,6 @@ angular.module('vilobiApp')
         };
         $scope.goGeneral = function(locate) {
             driverSrv.set(locate);
-            console.log($state.current.name);
             driverSrv.setState($state.current.name);
             $state.go('common.machinesRegular',{'id':locate});
         };
