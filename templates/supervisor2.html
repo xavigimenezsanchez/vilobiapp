@@ -16,10 +16,12 @@
             <h3>{{ dept.WCGroup }}</h3>
           </div>
           <!--md-button class="md-fab md-mini md-primary md-hue-2" aria-label="Go"-->
+          <md-icon class="md-secondary md-hue-2" md-svg-src="img/icons/ic_list_black_18px.svg" aria-label="general" ng-click="goMaterial(dept.WCGroup)" style="color: greenyellow;"></md-icon>
             <md-icon class="md-secondary md-hue-2" md-svg-src="img/icons/ic_visibility_black_18px.svg" aria-label="unic" ng-click="go(dept.WCGroup)" style="color: greenyellow;"></md-icon>
           
           <!--md-button class="md-fab md-mini md-primary md-hue-2" aria-label="Go"-->
             <md-icon class="md-secondary md-hue-2" md-svg-src="img/icons/ic_dashboard_black_18px.svg" aria-label="general" ng-click="goGeneral(dept.WCGroup)" style="color: greenyellow;"></md-icon>
+            
           <md-divider ng-if="!$last"></md-divider>
         </md-list-item>
         

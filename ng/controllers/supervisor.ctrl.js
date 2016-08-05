@@ -11,6 +11,11 @@ angular.module('vilobiApp')
             driverSrv.setState($state.current.name);
             $state.go('common.machinesRegular',{'id':locate});
         };
+        $scope.goMaterial = function(locate) {
+            driverSrv.set(locate);
+            driverSrv.setState($state.current.name);
+            $state.go('common.material', {'id':locate});
+        } 
         supervisorSrv.departaments()
             .success(function(depts) {
                 $scope.depts = depts;

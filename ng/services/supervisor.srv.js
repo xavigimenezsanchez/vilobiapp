@@ -14,7 +14,6 @@ angular.module('vilobiApp')
             return $http.get(deptAll + '/' + dept)
         }
         this.machineOne = function(mach) {
-            console.log(deptOne + '/' + mach);
             return $http.get(deptOne + '/' + mach)
         }
         this.machinesAllTimer= null;

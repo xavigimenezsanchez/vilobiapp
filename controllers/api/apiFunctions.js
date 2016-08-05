@@ -33,10 +33,10 @@ var functions = {
                                 }
                                 //createDate(info[iaux].FROMDATE,hour(info[iaux].FROMTIME))
                                 //if (info[iaux].PRODID== 'OFT046873') console.log('*********************************************************');
-                                aux.push({'OF':info[iaux].PRODID,'DESCRIPTION':info[iaux].NAME,'DATASETUP':createDate(info[iaux].FROMDATE,info[iaux].FROMTIME),'SETUP':hour(info[iaux].FROMTIME),'DATASTART':createDate(info[iaux].TODATE,info[iaux].TOTIME),'START':hour(info[iaux].TOTIME)});
+                                aux.push({'MACHINE' : info[iaux].WRKCTRID, 'OF':info[iaux].PRODID,'DESCRIPTION':info[iaux].NAME,'DATASETUP':createDate(info[iaux].FROMDATE,info[iaux].FROMTIME),'SETUP':hour(info[iaux].FROMTIME),'DATASTART':createDate(info[iaux].TODATE,info[iaux].TOTIME),'START':hour(info[iaux].TOTIME)});
                                 i--;
                             } catch(err) {
-                                aux.push({'OF':info[iaux].PRODID,'DESCRIPTION':info[iaux].NAME,'DATASETUP':createDate(info[iaux].FROMDATE,info[iaux].FROMTIME),'SETUP':hour(info[iaux].FROMTIME),'DATASTART':createDate(info[iaux].TODATE,info[iaux].TOTIME),'START':hour(info[iaux].TOTIME)});
+                                aux.push({'MACHINE' : info[iaux].WRKCTRID, 'OF':info[iaux].PRODID,'DESCRIPTION':info[iaux].NAME,'DATASETUP':createDate(info[iaux].FROMDATE,info[iaux].FROMTIME),'SETUP':hour(info[iaux].FROMTIME),'DATASTART':createDate(info[iaux].TODATE,info[iaux].TOTIME),'START':hour(info[iaux].TOTIME)});
                                 console.log(err);
                                 break;
                             }    
@@ -49,7 +49,7 @@ var functions = {
                                         break;
                                     }
                             }
-                            aux.push({'OF':info[iaux].AFCPRODPOOLSSID,'DESCRIPTION':info[iaux].NAME,'DATASETUP':createDate(info[iaux].FROMDATE,info[iaux].FROMTIME),'SETUP':hour(info[iaux].FROMTIME),'DATASTART':createDate(info[iaux].TODATE,info[iaux].TOTIME),'START':hour(info[iaux].TOTIME)});
+                            aux.push({'MACHINE' : info[iaux].WRKCTRID, 'OF':info[iaux].AFCPRODPOOLSSID,'DESCRIPTION':info[iaux].NAME,'DATASETUP':createDate(info[iaux].FROMDATE,info[iaux].FROMTIME),'SETUP':hour(info[iaux].FROMTIME),'DATASTART':createDate(info[iaux].TODATE,info[iaux].TOTIME),'START':hour(info[iaux].TOTIME)});
                             i--;
                         }
                     i++;    

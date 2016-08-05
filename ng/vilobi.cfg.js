@@ -48,6 +48,12 @@ angular.module('vilobiApp')
                 templateUrl    :   '/templates/supervisorMachine.html',
                 controller      :   'superMachineController',
                 breadCrumbs : 'detall supervisor'
+            })
+            .state('common.material' , {
+                url             :   '/material/:id',
+                templateUrl    :   '/templates/material.html',
+                controller      :   'materialController',
+                breadCrumbs : 'material'
             });
         
         
