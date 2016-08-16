@@ -1,48 +1,44 @@
-<br>
-<br>
-<div flex="grow" layout="row" layout-align="center center">
-   <div flex-gt-sm="50" flex>
-    <md-toolbar layout="row" class="md-hue-4">
-      <div class="md-toolbar-tools">
-        <span>Material</span>
-      </div>
-    </md-toolbar>
-    <md-content class="md-whiteframe-2dp">
-        
-      <md-list flex>
-        
-        <md-list-item class="md-3-line" ng-repeat="mat in material">
-          <!--img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" /-->
-          <div class="md-list-item-text" layout="column">
-            <h3>{{ mat.OF }}</h3>
-            <div ng-repeat="lm in mat.material">
-                <h4>{{lm.ItemId}}</h4>
-                <p>{{lm.Avalaible}}</p>
-            </div>
-
+<md-content layout-padding>
+    <br>
+    <br>
+    <div flex="grow" layout="row" layout-align="center center">
+      <div flex-gt-sm="50" flex>
+        <md-toolbar layout="row" class="md-hue-4">
+          <div class="md-toolbar-tools">
+            <span>Material</span>
           </div>
+        </md-toolbar>
+        <md-content class="md-whiteframe-2dp">
+            
+          <md-list flex>
+            
+            <md-list-item class="md-2-line" ng-repeat="mat in material">
+              <!--img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" /-->
+              <div class="md-list-item-text" layout="column">
+                <h3><strong>{{mat.MACHINE}}:</strong>{{mat.OF}}</h3>
+                    <p ng-repeat="lm in mat.material"> <md-button md-theme="{{lm.semaphor}}" class="md-raised md-primary">{{lm.ItemId}}</md-button><strong>Ample:</strong> {{lm.Width}}{{lm.WidthUnit}} <strong>Necessitat:</strong>{{lm.RequiredQty}} <strong>Disponible:</strong> {{lm.Avalaible}} </p>
+              </div>
+              <md-divider ng-if="!$last"></md-divider>
+            </md-list-item>
+            
+          </md-list>
+        </md-content>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br> 
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br> 
+    <br>
+    <br>
+    <br>
+      </div>
 
-          <md-divider ng-if="!$last"></md-divider>
-        </md-list-item>
-        
-      </md-list>
-    </md-content>
-<br>
-<br>
-<br>
-<br>
-<br> 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br> 
-<br>
-<br>
-<br>
-  </div>
 
-
- </div>
- 
+    </div>
+</md-content>   

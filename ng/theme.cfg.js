@@ -90,6 +90,7 @@ angular.module('vilobiApp')
             .dark();
         $mdThemingProvider.theme('semaphorGreen')
             .primaryPalette('green')
+            .accentPalette('green')
             .backgroundPalette('green',{
                 'default' : '100'
             })

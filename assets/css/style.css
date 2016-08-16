@@ -41,13 +41,23 @@ p {
 
 /* custom Semafors m-chips */
 
-semafor0 {
+semaphorRed, semafor0 {
   background-color: red important!;
 }
-m-chip.semafor1 {
+semaphorOrange, m-chip.semafor1 {
   background-color: orange;
 }
-m-chip.semafor2 {
+semaphorGreen, m-chip.semafor2 {
+  background-color: green;
+}
+
+.semaphorRed {
+  background-color: red;
+}
+.semaphorOrange {
+  background-color: orange;
+}
+.semaphorGreen {
   background-color: green;
 }
 @media only screen and (max-width : 992px) {
