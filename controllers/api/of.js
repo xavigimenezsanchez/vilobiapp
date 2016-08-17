@@ -8,7 +8,7 @@ router.get('/desc/:id', function (req, res, next) {
             res.json(desc);
         }).catch(function(err) {
             console.log(err);
-            res.json(desc);
+            res.json(err);
         });
 });
 
