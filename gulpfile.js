@@ -35,4 +35,24 @@ gulp.task('watch:js', ['js-dev'], function() {
     gulp.watch('ng/**/*.js', ['js-dev']);
 });
 
+
+gulp.task('copy-dist', function() {
+    gulp.src(['assets/**/*.*'])
+        .pipe(gulp.dest("dist/assets"));
+})
+gulp.task('js-dist', function () {
+    
+
+    gulp.src(['ng/module.js','ng/**/*.js'])
+        .pipe(sourcemaps.init())
+            .pipe(concat('vilobiApp.js'))
+            .pipe(ngAnnotate())
+            .pipe(uglify())
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest("dist/assets/js"));
+});
+
+
 gulp.task('dev', ['watch:js', 'dev:server']);
+
+gulp.task('dist', ['copy-dist','js-dist']);
